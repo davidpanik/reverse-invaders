@@ -1,0 +1,58 @@
+{
+	"paths": {
+		"input": {
+			"root": "src",
+			"scripts": "src/scripts/",
+			"styles": "src/styles/**/*.scss",
+			"stylesFolder": "src/styles",
+			"spriteSrc": "src/images/sprite-src",
+			"html": ["src/pages/**/*.html", "!src/pages/includes/**/*.html"],
+			"htmlWatch": ["src/**/*.html"],
+			"images": "src/images/**/*",
+			"static": ["src/**/*", "!src/**/*.html", "!src/scripts/**/*", "!src/styles/**/*", "!src/data/**/*"],
+			"data": "src/data/**/*.json"
+		},
+		"output": {
+			"devRoot": "./dist",
+			"images": "src/images",
+			"scripts": "dist/scripts",
+			"styles": "dist/styles",
+			"html": "dist/**/*.html",
+			"release": "release/"
+		}
+	},
+	"browserSync": {
+		"useProxy": false,
+		"proxyUrl": "localhost:8088/"
+	},
+	"bundles": ["main"],
+	"linting": true,
+	"sounds": {
+		"active": true,
+		"success": "success.mp3",
+		"error": "error.mp3"
+	},
+	"lintedFiles": [
+		"src/styles/**/*.scss",
+		"!src/styles/vendor/**/*.scss"
+	],
+	"sprite": {
+		"mode": {
+			"css": {
+				"dest": "./",
+				"sprite": "dist/images/sprites/sprites.svg",
+				"bust": false,
+				"render": {
+					"scss": {
+						"dest": "./src/styles/common/_spritesheet.scss",
+						"template": "./src/styles/vendor/_sprite-template.scss"
+					}
+				}
+			}
+		},
+		"variables": {
+			"mapname": "icons"
+		}
+	},
+	"tasksPath":"./gulp-tasks"
+}

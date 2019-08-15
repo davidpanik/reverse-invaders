@@ -1,0 +1,26 @@
+@import './vendor/_meyer-reset.scss';
+
+$color-black: #000;
+$color-white: #FFF;
+$color-yellow: #F1F000;
+$color-blue: #0000F0;
+$color-green: #01F001;
+$color-cyan: #00F0F1;
+$color-purple: #F200F2;
+$border-width: 2em;
+$font-family: Courier, sans-serif;
+
+
+body {
+	font-family: $font-family;
+	max-height: 100vh;
+	height: 100vh;
+	text-align: center;
+	background: $color-black;
+	font-size: 1.7vmin;
+}
+
+* {
+	box-sizing: border-box;
+}
+

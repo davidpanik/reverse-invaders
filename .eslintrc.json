@@ -1,0 +1,43 @@
+{
+	"extends": "eslint:recommended",
+	"env": {
+		"amd": true,
+		"browser": true,
+		"jquery": true,
+		"node": true,
+		"es6": true,
+		"worker": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
+	"rules": {
+		"arrow-parens": "warn",
+		"arrow-spacing": "warn",
+		"camelcase": "warn",
+		"comma-style": "warn",
+		"curly": "warn",
+		"dot-notation": "warn",
+		"eqeqeq": "warn",
+		"eol-last": "warn",
+		"id-length": "warn",
+		"indent": ["warn", "tab"],
+		"keyword-spacing": "warn",
+		"new-cap": "warn",
+		"no-alert": "warn",
+		"no-console": "warn",
+		"no-duplicate-imports": "warn",
+		"no-eval": "warn",
+		"no-extra-semi": "warn",
+		"no-multi-spaces": "warn",
+		"no-undef": "warn",
+		"no-var": "warn",
+		"padded-blocks": ["warn", "never"],
+		"quotes": ["warn", "single"],
+		"semi": "warn",
+		"space-infix-ops": "warn",
+		"space-before-blocks": "warn",
+		"vars-on-top": "warn"
+	}
+}

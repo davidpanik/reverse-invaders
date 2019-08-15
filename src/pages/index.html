@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>Reverse Invaders</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="apple-touch-icon" href="icon.png">
+
+		{% if content.task === 'build' %}
+			<link rel="stylesheet" type="text/css" href="./styles/main.min.css" media="screen">
+		{% else %}
+			<link rel="stylesheet" type="text/css" href="./styles/main.css" media="screen">
+		{% endif %}
+	</head>
+	<body>
+		<p>Hello world</p>
+
+		{% if content.task === 'build' %}
+			<script src="./scripts/main.min.js"></script>
+		{% else %}
+			<script src="./scripts/main.js"></script>
+		{% endif %}
+	</body>
+</html>
