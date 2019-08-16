@@ -5,7 +5,7 @@ let player = new Sprite({
 	x: (canvas.width / 2) - 10,
 	y: canvas.height - 40,
 	color: 'red',
-	width: 20,
+	width: 30,
 	height: 20,
 	dx: 2
 });
@@ -14,17 +14,21 @@ let playerMissiles = new Pool({
 	create: Sprite
 });
 
+let alienMissiles = new Pool({
+	create: Sprite
+});
+
 let loop = new GameLoop({
 	update: function () {
 		player.update();
 		playerMissiles.update();
-
-		// Bounce on edges
-		if (player.x > canvas.width - player.width || player.x < 0) {
-			player.dx *= -1;
-		}
+		alienMissiles.update();
 
 		if (chance(40)) {
+			player.dx *= -1;
+		}
+		// Bounce on edges
+		else if (player.x > canvas.width - player.width - 20 || player.x < 20) {
 			player.dx *= -1;
 		}
 
@@ -33,9 +37,9 @@ let loop = new GameLoop({
 				x: player.x + (player.width / 2),
 				y: player.y - 10,
 				color: 'green',
-				width: 3,
-				height: 8,
-				dy: -5,
+				width: 5,
+				height: 15,
+				dy: -3,
 				ttl: canvas.height
 			});
 		}
@@ -43,6 +47,7 @@ let loop = new GameLoop({
 	render: function () {
 		player.render();
 		playerMissiles.render();
+		alienMissiles.render();
 	}
 });
 
