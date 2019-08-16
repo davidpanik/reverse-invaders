@@ -21,7 +21,6 @@
 		"dot-notation": "warn",
 		"eqeqeq": "warn",
 		"eol-last": "warn",
-		"id-length": "warn",
 		"indent": ["warn", "tab"],
 		"keyword-spacing": "warn",
 		"new-cap": "warn",
