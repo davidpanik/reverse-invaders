@@ -1,4 +1,4 @@
-import { init, Sprite, GameLoop } from './kontra';
+import { init, Sprite, GameLoop, Pool } from './kontra';
 let { canvas } = init();
 
 let player = new Sprite({
@@ -10,40 +10,47 @@ let player = new Sprite({
 	dx: 2
 });
 
-let playerFire = [];
+let playerMissiles = new Pool({
+	create: Sprite
+});
 
 let loop = new GameLoop({
 	update: function () {
 		player.update();
-		playerFire.forEach((fire) => fire.update());
+		playerMissiles.update();
 
 		// Bounce on edges
 		if (player.x > canvas.width - player.width || player.x < 0) {
 			player.dx *= -1;
 		}
 
-		if (random(40) === 1) {
+		if (chance(40)) {
 			player.dx *= -1;
 		}
 
-		if (random(30) === 1) {
-			playerFire.push(Sprite({
+		if (chance(30)) {
+			playerMissiles.get({
 				x: player.x + (player.width / 2),
 				y: player.y - 10,
-				color: 'blue',
-				width: 5,
-				height: 10,
-				dy: -5
-			}));
+				color: 'green',
+				width: 3,
+				height: 8,
+				dy: -5,
+				ttl: canvas.height
+			});
 		}
 	},
 	render: function () {
 		player.render();
-		playerFire.forEach((fire) => fire.render());
+		playerMissiles.render();
 	}
 });
 
 loop.start();
+
+function chance(n) {
+	return (random(n) === 0);
+}
 
 function random(r1, r2, r3) {
 	let min = 0;
