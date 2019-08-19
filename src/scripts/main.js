@@ -1,7 +1,32 @@
+/*
+
+TODO
+	Display player lives
+	Detect when all aliens are dead
+	Partical collision effects
+	Sound effects
+	Work out lowest alien in each column
+	Add cooldown to weapons
+	Indicate which aliens are about to fire
+	Add special alien
+	Bring a dead alien back when special alien crosses the screen
+	Make player aim for specific aliens
+	Make player attempt to dodge bullets
+	Start splitting out code
+
+*/
+
+
 import { init, Sprite, GameLoop, Pool, initKeys, keyPressed } from './kontra';
+import { chance, random } from './random';
+
 let { canvas } = init();
 
 initKeys();
+
+const gutter = 20;
+let playerLives = 5;
+
 
 let player = new Sprite({
 	x: (canvas.width / 2) - 10,
@@ -24,14 +49,7 @@ for (let x = 0; x < 4; x++) {
 			width: 40,
 			height: 40,
 			anchor: { x: 0.5, y: 0.5 },
-			alive: true,
-			update: function() {
-				if (keyPressed('left')) {
-					this.x -= 2;
-				} else if (keyPressed('right')) {
-					this.x += 2;
-				}
-			}
+			alive: true
 		}));
 	}
 }
@@ -44,6 +62,28 @@ let alienMissiles = new Pool({
 	create: Sprite
 });
 
+function sortByX(alpha, beta) {
+	return (alpha.x > beta.x) ? 1 : (beta.x > alpha.x) ? -1 : 0;
+}
+
+function sortByY(alpha, beta) {
+	return (alpha.y > beta.y) ? 1 : (beta.y > alpha.y) ? -1 : 0;
+}
+
+function leftMostAlien() {
+	return aliens.filter((alien) => alien.alive).sort(sortByX)[0];
+}
+
+function rightMostAlien() {
+	return aliens.filter((alien) => alien.alive).sort(sortByX).slice(-1)[0];
+}
+
+function getLowestAliens() {
+	let lowestAlien = aliens.filter((alien) => alien.alive).sort(sortByY).slice(-1)[0];
+
+	return aliens.filter((alien) => alien.alive).filter((alien) => alien.y === lowestAlien.y);
+}
+
 let loop = new GameLoop({
 	update: function () {
 		player.update();
@@ -55,14 +95,14 @@ let loop = new GameLoop({
 			player.dx *= -1;
 		}
 		// Bounce on edges
-		else if (player.x > canvas.width - player.width - 20 || player.x < 20) {
+		else if (player.x > canvas.width - gutter - (player.width / 2) || player.x < gutter + (player.width / 2)) {
 			player.dx *= -1;
 		}
 
 		if (chance(50)) {
 			playerMissiles.get({
 				x: player.x + (player.width / 2),
-				y: player.y - 10,
+				y: player.y - (player.height / 2),
 				color: 'green',
 				width: 5,
 				height: 15,
@@ -72,14 +112,58 @@ let loop = new GameLoop({
 			});
 		}
 
+		if (chance(100)) {
+			getLowestAliens().forEach((alien) => {
+				alienMissiles.get({
+					x: alien.x + (alien.width / 2),
+					y: alien.y + (alien.height / 2),
+					color: 'yellow',
+					width: 5,
+					height: 15,
+					anchor: { x: 0.5, y: 0.5 },
+					dy: 3,
+					ttl: canvas.height
+				});
+			});
+		}
+
 		playerMissiles.getAliveObjects().forEach((missile) => {
 			aliens.filter((alien) => alien.alive).forEach((alien) => {
 				if (missile.collidesWith(alien)) {
 					alien.alive = false;
 					missile.ttl = 0;
 				}
-
 			});
+		});
+
+		alienMissiles.getAliveObjects().forEach((missile) => {
+			if (missile.collidesWith(player)) {
+				console.log('impact', playerLives);
+				playerLives -= 1;
+				missile.ttl = 0;
+
+				if (playerLives <= 0) {
+					console.log('YOU WIN!');
+				}
+			}
+		});
+		
+		if (keyPressed('left')) {
+			if (leftMostAlien().x > gutter + (aliens[0].width / 2)) {
+				aliens.forEach((alien) => {
+					alien.x -= 2;
+				});
+			}
+		} else if (keyPressed('right')) {
+			if (rightMostAlien().x < canvas.width - gutter - (aliens[0].width / 2)) {
+				aliens.forEach((alien) => {
+					alien.x += 2;
+				});
+			}
+		}
+
+		aliens.forEach((alien) => {
+			alien.y += 0.01;
 		});
 	},
 	render: function () {
@@ -91,36 +175,3 @@ let loop = new GameLoop({
 });
 
 loop.start();
-
-function chance(n) {
-	return (random(n) === 0);
-}
-
-function random(r1, r2, r3) {
-	let min = 0;
-	let max = 0;
-	let interval = 1;
-	let result;
-
-	if (typeof (r1) !== 'undefined') {
-		min = 0;
-		max = r1;
-	}
-
-	if (typeof (r2) !== 'undefined') {
-		min = r1;
-		max = r2;
-	}
-
-	if (typeof (r3) !== 'undefined') {
-		interval = r3;
-	}
-
-	result = Math.floor(Math.random() * (max - min)) + min;
-
-	if (interval > 1) {
-		result = Math.round(result / interval) * interval;
-	}
-
-	return result;
-}
