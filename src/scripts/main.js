@@ -1,5 +1,7 @@
-import { init, Sprite, GameLoop, Pool } from './kontra';
+import { init, Sprite, GameLoop, Pool, initKeys, keyPressed } from './kontra';
 let { canvas } = init();
+
+initKeys();
 
 let player = new Sprite({
 	x: (canvas.width / 2) - 10,
@@ -7,8 +9,32 @@ let player = new Sprite({
 	color: 'red',
 	width: 30,
 	height: 20,
+	anchor: { x: 0.5, y: 0.5 },
 	dx: 2
 });
+
+let aliens = [];
+
+for (let x = 0; x < 4; x++) {
+	for (let y = 0; y < 10; y++) {
+		aliens.push(new Sprite({
+			x: (60 * y) + 50,
+			y: (60 * x) + 50,
+			color: 'blue',
+			width: 40,
+			height: 40,
+			anchor: { x: 0.5, y: 0.5 },
+			alive: true,
+			update: function() {
+				if (keyPressed('left')) {
+					this.x -= 2;
+				} else if (keyPressed('right')) {
+					this.x += 2;
+				}
+			}
+		}));
+	}
+}
 
 let playerMissiles = new Pool({
 	create: Sprite
@@ -21,6 +47,7 @@ let alienMissiles = new Pool({
 let loop = new GameLoop({
 	update: function () {
 		player.update();
+		aliens.filter((alien) => alien.alive).forEach((alien) => alien.update());
 		playerMissiles.update();
 		alienMissiles.update();
 
@@ -32,20 +59,32 @@ let loop = new GameLoop({
 			player.dx *= -1;
 		}
 
-		if (chance(30)) {
+		if (chance(50)) {
 			playerMissiles.get({
 				x: player.x + (player.width / 2),
 				y: player.y - 10,
 				color: 'green',
 				width: 5,
 				height: 15,
+				anchor: { x: 0.5, y: 0.5 },
 				dy: -3,
 				ttl: canvas.height
 			});
 		}
+
+		playerMissiles.getAliveObjects().forEach((missile) => {
+			aliens.filter((alien) => alien.alive).forEach((alien) => {
+				if (missile.collidesWith(alien)) {
+					alien.alive = false;
+					missile.ttl = 0;
+				}
+
+			});
+		});
 	},
 	render: function () {
 		player.render();
+		aliens.filter((alien) => alien.alive).forEach((alien) => alien.render());
 		playerMissiles.render();
 		alienMissiles.render();
 	}

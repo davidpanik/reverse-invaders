@@ -73,11 +73,11 @@ canvas,
 
 @keyframes glow {
 	from {
-		filter: saturate(5);
+		filter: saturate(2);
 	}
 
 	to {
-		filter: saturate(3);
+		filter: saturate(1);
 	}
 }
 
