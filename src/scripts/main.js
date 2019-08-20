@@ -1,11 +1,13 @@
 /*
 
 TODO
+	Start aliens centered
 	Display player lives
 	Partical collision effects
 	Sound effects
 	Work out lowest alien in each column
 	Indicate which aliens are about to fire
+	Add sprites
 	Add special alien
 	Bring a dead alien back when special alien crosses the screen
 	Make player aim for specific aliens
@@ -19,16 +21,26 @@ TODO
 
 
 import { init, Sprite, GameLoop, Pool, initKeys, keyPressed } from './vendor/kontra';
-import { chance, random } from './random';
+import TinyMusic from './vendor/TinyMusic';
+import { chance } from './random';
 
 let { canvas } = init();
 
 initKeys();
 
+const center = {
+	x: 0.5,
+	y: 0.5
+};
 const gutter = 10;
 let playerLives = 5;
 let playerCooldown = 1000;
 let alienCooldown = 1000;
+let alienRows = 4;
+let alienColumns = 10;
+let alienWidth = 40;
+let alienHeight = 40;
+let alienSpacing = 20;
 
 let player = new Sprite({
 	x: (canvas.width / 2) - 10,
@@ -36,22 +48,22 @@ let player = new Sprite({
 	color: 'red',
 	width: 30,
 	height: 20,
-	anchor: { x: 0.5, y: 0.5 },
+	anchor: center,
 	dx: 2,
 	weaponReady: true
 });
 
 let aliens = [];
 
-for (let x = 0; x < 4; x++) {
-	for (let y = 0; y < 10; y++) {
+for (let x = 0; x < alienRows; x++) {
+	for (let y = 0; y < alienColumns; y++) {
 		aliens.push(new Sprite({
-			x: (60 * y) + 50,
-			y: (60 * x) + 50,
+			x: ((alienWidth + alienSpacing) * y) + 50,
+			y: ((alienWidth + alienSpacing) * x) + 50,
 			color: 'blue',
-			width: 40,
-			height: 40,
-			anchor: { x: 0.5, y: 0.5 },
+			width: alienWidth,
+			height: alienHeight,
+			anchor: center,
 			alive: true,
 			weaponReady: true
 		}));
@@ -124,10 +136,12 @@ let loop = new GameLoop({
 					color: 'green',
 					width: 5,
 					height: 15,
-					anchor: { x: 0.5, y: 0.5 },
+					anchor: center,
 					dy: -3,
 					ttl: canvas.height
 				});
+
+				audio.play('playerShoot');
 
 				player.weaponReady = false;
 				setTimeout(() => {
@@ -145,10 +159,12 @@ let loop = new GameLoop({
 						color: 'yellow',
 						width: 5,
 						height: 15,
-						anchor: { x: 0.5, y: 0.5 },
+						anchor: center,
 						dy: 3,
 						ttl: canvas.height
 					});
+
+					audio.play('alienShoot');
 
 					alien.weaponReady = false;
 					setTimeout(() => {
@@ -207,3 +223,40 @@ let loop = new GameLoop({
 });
 
 loop.start();
+
+let audio = {
+	enabled: false,
+	sounds: {},
+	audioContext: null,
+
+	init: function() {
+		this.audioContext = new AudioContext();
+
+		document.addEventListener('click', () => {
+			console.log('clicked', this.enabled);
+			this.enabled = !this.enabled;
+		});		
+	},
+
+	add: function(name, tempo, notes) {
+		let sequence = new TinyMusic.Sequence(this.audioContext, tempo, notes);
+
+		sequence.gain.gain.value = 0.1;
+		sequence.bass.gain.value = 40;
+		sequence.createCustomWave([-1, -0.9, -0.6, -0.3, 0, 0.3, 0.6, 0.9, 1]);
+		sequence.loop = false;
+
+		this.sounds[name] = sequence;
+	},
+
+	play: function(name) {
+		if (this.enabled && this.sounds[name]) {
+			this.sounds[name].play();
+		}
+	}
+};
+
+audio.add('playerShoot', 200, ['G3 s']);
+audio.add('alienShoot', 200, ['C3 s']);
+
+audio.init();

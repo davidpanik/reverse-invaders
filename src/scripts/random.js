@@ -2,6 +2,10 @@ function chance(n) {
 	return (random(n) === 0);
 }
 
+function randomFromArray(arr) {
+	return arr[random(arr.length)];
+}
+
 function random(r1, r2, r3) {
 	let min = 0;
 	let max = 0;
@@ -31,4 +35,4 @@ function random(r1, r2, r3) {
 	return result;
 }
 
-export { chance, random };
+export { chance, randomFromArray, random };
