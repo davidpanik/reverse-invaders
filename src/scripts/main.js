@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Start aliens centered
 	Display player lives
 	Partical collision effects
 	Sound effects
@@ -33,7 +32,7 @@ const center = {
 	y: 0.5
 };
 const gutter = 10;
-let playerLives = 5;
+let playerLives = 500;
 let playerCooldown = 1000;
 let alienCooldown = 1000;
 let alienRows = 4;
@@ -55,11 +54,13 @@ let player = new Sprite({
 
 let aliens = [];
 
-for (let x = 0; x < alienRows; x++) {
-	for (let y = 0; y < alienColumns; y++) {
+
+let offsetLeft = (canvas.width - (alienColumns * alienWidth) - ((alienColumns - 1) * alienSpacing)) / 2;
+for (let row = 0; row < alienRows; row++) {
+	for (let column = 0; column < alienColumns; column++) {
 		aliens.push(new Sprite({
-			x: ((alienWidth + alienSpacing) * y) + 50,
-			y: ((alienWidth + alienSpacing) * x) + 50,
+			x: ((alienWidth + alienSpacing) * column) + offsetLeft + (alienWidth / 2),
+			y: ((alienWidth + alienSpacing) * row) + 50,
 			color: 'blue',
 			width: alienWidth,
 			height: alienHeight,
