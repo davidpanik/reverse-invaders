@@ -32,17 +32,25 @@ const center = {
 	y: 0.5
 };
 const gutter = 10;
-let playerLives = 500;
-let playerCooldown = 1000;
-let alienCooldown = 1000;
-let alienRows = 4;
-let alienColumns = 10;
-let alienWidth = 40;
-let alienHeight = 40;
-let alienSpacing = 20;
+
+function sortByX(alpha, beta) {
+	return (alpha.x > beta.x) ? 1 : (beta.x > alpha.x) ? -1 : 0;
+}
+
+function sortByY(alpha, beta) {
+	return (alpha.y > beta.y) ? 1 : (beta.y > alpha.y) ? -1 : 0;
+}
 
 
 let player = {
+	// STATIC
+	cooldown: 1000,
+
+	// VARIABLE
+	weaponReady: true,
+	lives: 500,
+
+	// DISPLAY
 	sprite: new Sprite({
 		x: (canvas.width / 2) - 10,
 		y: canvas.height - 40,
@@ -55,9 +63,8 @@ let player = {
 	missiles: new Pool({
 		create: Sprite
 	}),
-	weaponReady: true,
-	lives: 500,
-	cooldown: 1000,
+
+	// FUNCTIONS
 	update: function() {
 		if (chance(40)) {
 			this.sprite.dx *= -1;
@@ -90,7 +97,7 @@ let player = {
 		}
 		
 		this.missiles.getAliveObjects().forEach((missile) => {
-			getLivingAliens().forEach((alien) => {
+			aliens.getAlive().forEach((alien) => {
 				if (missile.collidesWith(alien)) {
 					alien.alive = false;
 					missile.ttl = 0;
@@ -105,77 +112,59 @@ let player = {
 		this.sprite.render();
 		this.missiles.render();
 	}
-}
+};
 
-let aliens = [];
+let aliens = {
+	// STATIC
+	cooldown: 1000,
+	rows: 4,
+	columns: 10,
+	width: 40,
+	height: 40,
+	spacing: 20,
+	descent: 0.1,
 
+	// VARIABLE
+	speed: 2,
 
-let offsetLeft = (canvas.width - (alienColumns * alienWidth) - ((alienColumns - 1) * alienSpacing)) / 2;
-for (let row = 0; row < alienRows; row++) {
-	for (let column = 0; column < alienColumns; column++) {
-		aliens.push(new Sprite({
-			x: ((alienWidth + alienSpacing) * column) + offsetLeft + (alienWidth / 2),
-			y: ((alienWidth + alienSpacing) * row) + 50,
-			color: 'blue',
-			width: alienWidth,
-			height: alienHeight,
-			anchor: center,
-			alive: true,
-			weaponReady: true
-		}));
-	}
-}
+	// DISPLAY
+	sprites: [],
+	missiles: new Pool({
+		create: Sprite
+	}),
 
-let alienMissiles = new Pool({
-	create: Sprite
-});
+	// FUNCTIONS	
+	init: function() {
+		let offsetLeft = (canvas.width - (this.columns * this.width) - ((this.columns - 1) * this.spacing)) / 2;
 
-function sortByX(alpha, beta) {
-	return (alpha.x > beta.x) ? 1 : (beta.x > alpha.x) ? -1 : 0;
-}
-
-function sortByY(alpha, beta) {
-	return (alpha.y > beta.y) ? 1 : (beta.y > alpha.y) ? -1 : 0;
-}
-
-function leftMostAlien() {
-	return aliens.filter((alien) => alien.alive).sort(sortByX)[0];
-}
-
-function rightMostAlien() {
-	return aliens.filter((alien) => alien.alive).sort(sortByX).slice(-1)[0];
-}
-
-function getLowestAliens() {
-	let lowestAlien = aliens.filter((alien) => alien.alive).sort(sortByY).slice(-1)[0];
-
-	return aliens.filter((alien) => alien.alive).filter((alien) => alien.y === lowestAlien.y);
-}
-
-function getLivingAliens() {
-	return aliens.filter((alien) => alien.alive);
-}
-
-function getDeadAliens() {
-	return aliens.filter((alien) => alien.alive !== false);
-}
-
-let loop = new GameLoop({
-	update: function () {
-		if (getDeadAliens().length <= 0) {
+		for (let row = 0; row < this.rows; row++) {
+			for (let column = 0; column < this.columns; column++) {
+				this.sprites.push(new Sprite({
+					x: ((this.width + this.spacing) * column) + offsetLeft + (this.width / 2),
+					y: ((this.width + this.spacing) * row) + 50,
+					color: 'blue',
+					width: this.width,
+					height: this.height,
+					anchor: center,
+					alive: true,
+					weaponReady: true
+				}));
+			}
+		}		
+	},
+	update: function() {
+		if (this.getAlive().length <= 0) {
 			alert('GAME OVER');
 			window.location = window.location;
 		}
 
-		player.update();
+		this.getAlive().forEach((alien) => alien.update());
+		this.missiles.update();
 
-		getLivingAliens().forEach((alien) => alien.update());
-		alienMissiles.update();
-		
-		getLowestAliens().forEach((alien) => {
+		this.getLowest().forEach((alien) => {
 			if (chance(100)) {
 				if (alien.weaponReady) {
-					alienMissiles.get({
+					this.missiles.get({
 						x: alien.x,
 						y: alien.y + (alien.height / 2),
 						color: 'yellow',
@@ -191,37 +180,66 @@ let loop = new GameLoop({
 					alien.weaponReady = false;
 					setTimeout(() => {
 						alien.weaponReady = true;
-					}, alienCooldown);
+					}, this.cooldown);
 				}
 			}
 		});
-		
+
 		if (keyPressed('left')) {
-			if (leftMostAlien().x > gutter + (aliens[0].width / 2)) {
-				aliens.forEach((alien) => {
-					alien.x -= 2;
+			if (this.getLeftMost().x > gutter + (this.width / 2)) {
+				this.sprites.forEach((alien) => {
+					alien.x -= this.speed;
 				});
 			}
 		} else if (keyPressed('right')) {
-			if (rightMostAlien().x < canvas.width - gutter - (aliens[0].width / 2)) {
-				aliens.forEach((alien) => {
-					alien.x += 2;
+			if (this.getRightMost().x < canvas.width - gutter - (this.width / 2)) {
+				this.sprites.forEach((alien) => {
+					alien.x += this.speed;
 				});
 			}
 		}
 
-		aliens.forEach((alien) => {
-			alien.y += 0.01;
+		this.sprites.forEach((alien) => {
+			alien.y += this.descent;
 		});
+	},
+	render: function() {
+		this.getAlive().forEach((alien) => alien.render());
+		this.missiles.render();
+	},
+
+	// HELPERES
+	getLeftMost: function() {
+		return this.getAlive().sort(sortByX)[0];
+	},
+	getRightMost: function () {
+		return this.getAlive().sort(sortByX).slice(-1)[0];
+	},
+	getLowest: function() {
+		let lowestAlien = this.getAlive().sort(sortByY).slice(-1)[0];
+
+		return this.getAlive().filter((alien) => alien.y === lowestAlien.y);
+	},
+	getAlive: function () {
+		return this.sprites.filter((alien) => alien.alive === true);
+	},
+	getDead: function () {
+		return this.sprites.filter((alien) => alien.alive === false);
+	}
+};
+
+let loop = new GameLoop({
+	update: function () {
+		player.update();
+		aliens.update();
 	},
 	render: function () {
 		player.render();
-
-		getLivingAliens().forEach((alien) => alien.render());
-		alienMissiles.render();
+		aliens.render();
 	}
 });
 
+aliens.init();
 loop.start();
 
 let audio = {
