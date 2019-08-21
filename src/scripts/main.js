@@ -15,10 +15,10 @@ TODO
 	Bring a dead alien back when special alien crosses the screen
 	Make player aim for specific aliens
 	Make player attempt to dodge bullets
-	Start splitting out code
-	Host on Netlify
 	Increase alien speed as game progresses
 	Handle game end
+
+	https://elated-saha-ab5e41.netlify.com/
 
 */
 

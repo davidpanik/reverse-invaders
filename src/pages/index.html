@@ -7,11 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="apple-touch-icon" href="icon.png">
 
-		{% if content.task === 'build' %}
-			<link rel="stylesheet" type="text/css" href="./styles/main.min.css" media="screen">
-		{% else %}
-			<link rel="stylesheet" type="text/css" href="./styles/main.css" media="screen">
-		{% endif %}
+		<link rel="stylesheet" type="text/css" href="./styles/main.css" media="screen">
 	</head>
 	<body>
 		<div class="screen">
@@ -19,10 +15,6 @@
 			<div class="overlay"></div>
 		</div>
 
-		{% if content.task === 'build' %}
-			<script src="./scripts/main.min.js"></script>
-		{% else %}
-			<script src="./scripts/main.js"></script>
-		{% endif %}
+		<script src="./scripts/main.js"></script>
 	</body>
 </html>

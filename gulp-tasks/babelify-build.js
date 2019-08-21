@@ -8,7 +8,7 @@ module.exports = function(gulp, plugins, config, errorHandler) {
 				error.plugin = 'babelify';
 				errorHandler.call(this, error);
 			})
-			.pipe(plugins.vinylSourceStream(bundle + '.min.js'))
+			.pipe(plugins.vinylSourceStream(bundle + '.js'))
 			.pipe(plugins.vinylBuffer())
 			.pipe(plugins.uglify())
 			.pipe(gulp.dest(config.paths.output.scripts));

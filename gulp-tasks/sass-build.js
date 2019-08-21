@@ -8,7 +8,7 @@ module.exports = function (gulp, plugins, config, errorHandler) {
 				plugins.autoprefixer({browsers: ['> 1%'], cascade: false}),
 				plugins.postcssReporter({ clearMessages: true, throwError: true, noIcon: false })
 			]))
-			.pipe(plugins.rename({suffix: '.min'}))
+			// .pipe(plugins.rename({suffix: '.min'}))
 			.pipe(gulp.dest(config.paths.output.styles));
 	});
 };
