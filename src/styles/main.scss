@@ -17,6 +17,10 @@ body {
 	text-align: center;
 	background: $color-black;
 	font-size: 1.7vmin;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 
 * {
@@ -30,7 +34,6 @@ body {
 	box-shadow: inset 5px 5px 55px 10px rgba(255, 255, 255, 0.17), 0px 0px 100px 10px rgba(0, 255, 0, 0.06);
 	animation: 1s infinite alternate glow;
 	animation-timing-function: linear;
-	margin-top: 5%;
 	overflow: hidden;
 }
 
