@@ -41,16 +41,71 @@ let alienWidth = 40;
 let alienHeight = 40;
 let alienSpacing = 20;
 
-let player = new Sprite({
-	x: (canvas.width / 2) - 10,
-	y: canvas.height - 40,
-	color: 'red',
-	width: 30,
-	height: 20,
-	anchor: center,
-	dx: 2,
-	weaponReady: true
-});
+
+let player = {
+	sprite: new Sprite({
+		x: (canvas.width / 2) - 10,
+		y: canvas.height - 40,
+		color: 'red',
+		width: 30,
+		height: 20,
+		anchor: center,
+		dx: 2
+	}),
+	missiles: new Pool({
+		create: Sprite
+	}),
+	weaponReady: true,
+	lives: 500,
+	cooldown: 1000,
+	update: function() {
+		if (chance(40)) {
+			this.sprite.dx *= -1;
+		}
+		// Bounce on edges
+		else if (this.sprite.x > canvas.width - gutter - (this.sprite.width / 2) || this.sprite.x < gutter + (this.sprite.width / 2)) {
+			this.sprite.dx *= -1;
+		}
+
+		if (chance(50)) {
+			if (this.weaponReady) {
+				this.missiles.get({
+					x: this.sprite.x,
+					y: this.sprite.y - (this.sprite.height / 2),
+					color: 'green',
+					width: 5,
+					height: 15,
+					anchor: center,
+					dy: -3,
+					ttl: canvas.height
+				});
+
+				audio.play('playerShoot');
+
+				this.weaponReady = false;
+				setTimeout(() => {
+					this.weaponReady = true;
+				}, this.Cooldown);
+			}
+		}
+		
+		this.missiles.getAliveObjects().forEach((missile) => {
+			getLivingAliens().forEach((alien) => {
+				if (missile.collidesWith(alien)) {
+					alien.alive = false;
+					missile.ttl = 0;
+				}
+			});
+		});
+
+		this.sprite.update();
+		this.missiles.update();
+	},
+	render: function() {
+		this.sprite.render();
+		this.missiles.render();
+	}
+}
 
 let aliens = [];
 
@@ -70,10 +125,6 @@ for (let row = 0; row < alienRows; row++) {
 		}));
 	}
 }
-
-let playerMissiles = new Pool({
-	create: Sprite
-});
 
 let alienMissiles = new Pool({
 	create: Sprite
@@ -117,39 +168,9 @@ let loop = new GameLoop({
 		}
 
 		player.update();
+
 		getLivingAliens().forEach((alien) => alien.update());
-		playerMissiles.update();
 		alienMissiles.update();
-
-		if (chance(40)) {
-			player.dx *= -1;
-		}
-		// Bounce on edges
-		else if (player.x > canvas.width - gutter - (player.width / 2) || player.x < gutter + (player.width / 2)) {
-			player.dx *= -1;
-		}
-
-		if (chance(50)) {
-			if (player.weaponReady) {
-				playerMissiles.get({
-					x: player.x,
-					y: player.y - (player.height / 2),
-					color: 'green',
-					width: 5,
-					height: 15,
-					anchor: center,
-					dy: -3,
-					ttl: canvas.height
-				});
-
-				audio.play('playerShoot');
-
-				player.weaponReady = false;
-				setTimeout(() => {
-					player.weaponReady = true;
-				}, playerCooldown);
-			}
-		}
 		
 		getLowestAliens().forEach((alien) => {
 			if (chance(100)) {
@@ -174,28 +195,6 @@ let loop = new GameLoop({
 				}
 			}
 		});
-
-		playerMissiles.getAliveObjects().forEach((missile) => {
-			getLivingAliens().forEach((alien) => {
-				if (missile.collidesWith(alien)) {
-					alien.alive = false;
-					missile.ttl = 0;
-				}
-			});
-		});
-
-		alienMissiles.getAliveObjects().forEach((missile) => {
-			if (missile.collidesWith(player)) {
-				console.log('impact', playerLives);
-				playerLives -= 1;
-				missile.ttl = 0;
-
-				if (playerLives <= 0) {
-					alert('YOU WIN!');
-					window.location = window.location;
-				}
-			}
-		});
 		
 		if (keyPressed('left')) {
 			if (leftMostAlien().x > gutter + (aliens[0].width / 2)) {
@@ -217,8 +216,8 @@ let loop = new GameLoop({
 	},
 	render: function () {
 		player.render();
+
 		getLivingAliens().forEach((alien) => alien.render());
-		playerMissiles.render();
 		alienMissiles.render();
 	}
 });
