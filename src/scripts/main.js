@@ -1,9 +1,6 @@
 /*
 
 TODO
-	Cooldown on weapon has stopped working	
-	Missile collision detection has stopped working
-	Display player lives
 	Detect player and alien collisions
 	Detect alien reaching bottom of screen
 	Partical collision effects

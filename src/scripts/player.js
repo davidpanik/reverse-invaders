@@ -13,7 +13,7 @@ export default function createPlayer(canvas, audio, aliens) {
 
 		// VARIABLE
 		weaponReady: true,
-		lives: 500,
+		lives: 10,
 
 		// DISPLAY
 		sprite: new Sprite({
@@ -70,14 +70,33 @@ export default function createPlayer(canvas, audio, aliens) {
 				});
 			});
 
+			aliens.missiles.getAliveObjects().forEach((missile) => {
+				if (missile.collidesWith(this.sprite)) {
+					missile.ttl = 0;
+					this.lives -= 1;
+
+					this.updateDisplay();
+
+					if (this.lives <= 0) {
+						alert('YOU WIN');
+						window.location = window.location;
+					}
+				}
+			});
+
 			this.sprite.update();
 			this.missiles.update();
 		},
 		render: function () {
 			this.sprite.render();
 			this.missiles.render();
+		},
+		updateDisplay: function() {
+			document.getElementById('playerLives').innerHTML = this.lives;
 		}
 	};
 	
+	player.updateDisplay();
+
 	return player;
 }

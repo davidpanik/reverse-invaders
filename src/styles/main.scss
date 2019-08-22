@@ -74,6 +74,16 @@ canvas,
 	border-radius: 20px;
 }
 
+#playerLives {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 20px;
+	padding: 0.8em;
+	color: red;
+	font-weight: bold;
+}
+
 @keyframes glow {
 	from {
 		filter: saturate(2);
