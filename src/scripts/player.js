@@ -12,6 +12,7 @@ export default function createPlayer(canvas, audio, aliens) {
 		cooldown: 1000,
 		speed: 1,
 		firingRange: 70,
+		dodgeRange: 200,
 
 		// VARIABLE
 		weaponReady: true,
@@ -40,11 +41,6 @@ export default function createPlayer(canvas, audio, aliens) {
 				this.sprite.dx = -1 * this.speed;
 			} else {
 				this.sprite.dx = 0;
-			}
-
-			// Bounce on edges
-			if (this.sprite.x > canvas.width - canvas.gutter - (this.sprite.width / 2) || this.sprite.x < canvas.gutter + (this.sprite.width / 2)) {
-				this.sprite.dx *= -1;
 			}
 
 			if ((this.sprite.x > this.target.x - this.firingRange && this.sprite.x < this.target.x * this.firingRange) || chance(100)) {
@@ -89,6 +85,20 @@ export default function createPlayer(canvas, audio, aliens) {
 						alert('YOU WIN');
 						window.location = window.location;
 					}
+				} else {
+					if (missile.y > player.sprite.y - this.dodgeRange && missile.y < player.sprite.y - (player.sprite.height / 2) - (missile.height / 2)) {
+						let dodgeSpeed = 2;
+						if (player.sprite.y - missile.y < player.sprite.height * 2) {
+							dodgeSpeed = 3;
+							this.chooseTarget();
+						}
+
+						if (missile.x > player.sprite.x - (player.sprite.width * 1.5) && missile.y < player.sprite.y) {
+							this.sprite.dx = this.speed * dodgeSpeed;
+						} else if (missile.x <= player.sprite.x + (player.sprite.width * 1.5) && missile.y > player.sprite.y) {
+							this.sprite.dx = -1 * this.speed * dodgeSpeed;
+						}
+					}
 				}
 			});
 
@@ -108,6 +118,17 @@ export default function createPlayer(canvas, audio, aliens) {
 
 			if (!this.target.alive || chance(800)) {
 				this.chooseTarget();
+			}
+
+			// Bounce on edges
+			if (this.sprite.x > canvas.width - canvas.gutter - (this.sprite.width / 2)) {
+				this.sprite.dx *= -1;
+				this.sprite.x = canvas.width - canvas.gutter - (this.sprite.width / 2);
+			}
+			
+			if (this.sprite.x < canvas.gutter + (this.sprite.width / 2)) {
+				this.sprite.dx *= -1;
+				this.sprite.x = canvas.gutter + (this.sprite.width / 2);
 			}
 
 			this.sprite.update();

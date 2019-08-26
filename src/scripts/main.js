@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Make player attempt to dodge bullets
 	Make player more likely to aim for end aliens
 	Add Event System
 	Add buttons on mobile
