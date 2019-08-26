@@ -39,7 +39,7 @@ export default function createPlayer(canvas, audio, aliens) {
 				this.sprite.dx *= -1;
 			}
 
-			if (chance(50)) {
+			if (chance(70)) {
 				if (this.weaponReady) {
 					this.missiles.get({
 						x: this.sprite.x,
@@ -84,6 +84,20 @@ export default function createPlayer(canvas, audio, aliens) {
 				}
 			});
 
+			aliens.getAlive().forEach((alien) => {
+				if (alien.collidesWith(this.sprite)) {
+					this.lives -= 1;
+					alien.alive = false;
+
+					this.updateDisplay();
+
+					if (this.lives <= 0) {
+						alert('YOU WIN');
+						window.location = window.location;
+					}					
+				}
+			});
+
 			this.sprite.update();
 			this.missiles.update();
 		},
@@ -92,7 +106,7 @@ export default function createPlayer(canvas, audio, aliens) {
 			this.missiles.render();
 		},
 		updateDisplay: function() {
-			document.getElementById('playerLives').innerHTML = this.lives;
+			document.getElementById('playerLives').innerHTML = 'Lives: ' + this.lives;
 		}
 	};
 	

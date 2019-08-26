@@ -27,6 +27,7 @@ export default function createAliens(canvas, audio) {
 
 		// VARIABLE
 		speed: 2,
+		firingFrom: '',
 
 		// DISPLAY
 		sprites: [],
@@ -48,10 +49,19 @@ export default function createAliens(canvas, audio) {
 						height: this.height,
 						anchor: center,
 						alive: true,
+						aboutToFire: false,
 						weaponReady: true
 					}));
 				}
 			}
+
+			setInterval(() => {
+				if (this.firingFrom === 'odd') {
+					this.firingFrom = 'even';
+				} else {
+					this.firingFrom = 'odd';
+				}
+			}, 1000);
 		},
 		update: function () {
 			if (this.getAlive().length <= 0) {
@@ -62,8 +72,8 @@ export default function createAliens(canvas, audio) {
 			this.getAlive().forEach((alien) => alien.update());
 			this.missiles.update();
 
-			this.getLowest().forEach((alien) => {
-				if (chance(100)) {
+			this.getLowest(this.firingFrom).forEach((alien) => {
+				if (chance(80)) {
 					if (alien.weaponReady) {
 						this.missiles.get({
 							x: alien.x,
@@ -83,6 +93,11 @@ export default function createAliens(canvas, audio) {
 							alien.weaponReady = true;
 						}, this.cooldown);
 					}
+				}
+
+				if (alien.y + (alien.height / 2) > canvas.height) {
+					alert('YOU WIN');
+					window.location = window.location;
 				}
 			});
 
@@ -116,10 +131,33 @@ export default function createAliens(canvas, audio) {
 		getRightMost: function () {
 			return this.getAlive().sort(sortByX).slice(-1)[0];
 		},
-		getLowest: function () {
-			let lowestAlien = this.getAlive().sort(sortByY).slice(-1)[0];
+		getLowest: function (specifier = '') {
+			let columns = {};
+			let aliens = [];
 
-			return this.getAlive().filter((alien) => alien.y === lowestAlien.y);
+			this.getAlive().forEach((alien) => {
+				if (!columns['c' + alien.x]) {
+					columns['c' + alien.x] = [];
+				}
+
+				columns['c' + alien.x].push(alien);
+			});
+
+			for (let column in columns) {
+				aliens.push(columns[column].sort(sortByY).slice(-1)[0]);
+			}
+
+			aliens = aliens.sort(sortByX);
+
+			if (specifier === 'odd') {
+				return aliens.filter((alien, index) => (index % 2 === 0));
+			} else if (specifier === 'even') {
+				return aliens.filter((alien, index) => (index % 2 !== 0));
+			} else if (specifier === 'all') {
+				return aliens;
+			}
+
+			return [];
 		},
 		getAlive: function () {
 			return this.sprites.filter((alien) => alien.alive === true);

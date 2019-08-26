@@ -1,11 +1,11 @@
 /*
 
 TODO
-	Detect player and alien collisions
-	Detect alien reaching bottom of screen
+	Add Event System
+	Add buttons on mobile
+	Add audio toggle button
 	Partical collision effects
 	Sound effects
-	Work out lowest alien in each column
 	Indicate which aliens are about to fire
 	Add sprites
 	Add special alien
