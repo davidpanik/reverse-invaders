@@ -72,7 +72,7 @@ export default function createAliens(canvas, audio) {
 			this.getAlive().forEach((alien) => alien.update());
 			this.missiles.update();
 
-			this.getLowest(this.firingFrom).forEach((alien) => {
+			this.getColumns(this.firingFrom).forEach((alien) => {
 				if (chance(80)) {
 					if (alien.weaponReady) {
 						this.missiles.get({
@@ -131,7 +131,12 @@ export default function createAliens(canvas, audio) {
 		getRightMost: function () {
 			return this.getAlive().sort(sortByX).slice(-1)[0];
 		},
-		getLowest: function (specifier = '') {
+		getLowest: function() {
+			let lowestAlien = this.getAlive().sort(sortByY).slice(-1)[0];
+
+			return this.getAlive().filter((alien) => alien.y === lowestAlien.y);
+		},
+		getColumns: function (specifier = '') {
 			let columns = {};
 			let aliens = [];
 

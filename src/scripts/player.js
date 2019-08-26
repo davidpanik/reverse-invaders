@@ -1,5 +1,5 @@
 import { Sprite, Pool } from './vendor/kontra';
-import { chance } from './random';
+import { chance, randomFromArray } from './random';
 
 const center = {
 	x: 0.5,
@@ -10,10 +10,13 @@ export default function createPlayer(canvas, audio, aliens) {
 	let player = {
 		// STATIC
 		cooldown: 1000,
+		speed: 1,
+		firingRange: 70,
 
 		// VARIABLE
 		weaponReady: true,
 		lives: 10,
+		target: null,
 
 		// DISPLAY
 		sprite: new Sprite({
@@ -31,16 +34,21 @@ export default function createPlayer(canvas, audio, aliens) {
 
 		// FUNCTIONS
 		update: function () {
-			if (chance(40)) {
-				this.sprite.dx *= -1;
+			if (this.sprite.x < this.target.x) {
+				this.sprite.dx = this.speed;
+			} else if (this.sprite.x > this.target.x) {
+				this.sprite.dx = -1 * this.speed;
+			} else {
+				this.sprite.dx = 0;
 			}
+
 			// Bounce on edges
-			else if (this.sprite.x > canvas.width - canvas.gutter - (this.sprite.width / 2) || this.sprite.x < canvas.gutter + (this.sprite.width / 2)) {
+			if (this.sprite.x > canvas.width - canvas.gutter - (this.sprite.width / 2) || this.sprite.x < canvas.gutter + (this.sprite.width / 2)) {
 				this.sprite.dx *= -1;
 			}
 
-			if (chance(70)) {
-				if (this.weaponReady) {
+			if ((this.sprite.x > this.target.x - this.firingRange && this.sprite.x < this.target.x * this.firingRange) || chance(100)) {
+				if (this.weaponReady === true) {
 					this.missiles.get({
 						x: this.sprite.x,
 						y: this.sprite.y - (this.sprite.height / 2),
@@ -57,7 +65,7 @@ export default function createPlayer(canvas, audio, aliens) {
 					this.weaponReady = false;
 					setTimeout(() => {
 						this.weaponReady = true;
-					}, this.Cooldown);
+					}, this.cooldown);
 				}
 			}
 
@@ -98,6 +106,10 @@ export default function createPlayer(canvas, audio, aliens) {
 				}
 			});
 
+			if (!this.target.alive || chance(800)) {
+				this.chooseTarget();
+			}
+
 			this.sprite.update();
 			this.missiles.update();
 		},
@@ -107,10 +119,16 @@ export default function createPlayer(canvas, audio, aliens) {
 		},
 		updateDisplay: function() {
 			document.getElementById('playerLives').innerHTML = 'Lives: ' + this.lives;
+		},
+
+		// HELPERS
+		chooseTarget: function() {
+			this.target = randomFromArray(aliens.getLowest());
 		}
 	};
 	
 	player.updateDisplay();
+	player.chooseTarget();
 
 	return player;
 }

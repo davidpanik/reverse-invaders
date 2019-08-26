@@ -1,6 +1,8 @@
 /*
 
 TODO
+	Make player attempt to dodge bullets
+	Make player more likely to aim for end aliens
 	Add Event System
 	Add buttons on mobile
 	Add audio toggle button
@@ -10,12 +12,10 @@ TODO
 	Add sprites
 	Add special alien
 	Bring a dead alien back when special alien crosses the screen
-	Make player aim for specific aliens
-	Make player attempt to dodge bullets
 	Increase alien speed as game progresses
 	Handle game end
 
-	https://elated-saha-ab5e41.netlify.com/
+	https://reverse-invaders.netlify.com/
 
 */
 
