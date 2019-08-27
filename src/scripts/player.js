@@ -6,7 +6,7 @@ const center = {
 	y: 0.5
 };
 
-export default function createPlayer(canvas, audio, aliens) {
+export default function createPlayer(canvas, audio, events, aliens) {
 	let player = {
 		// STATIC
 		cooldown: 1000,
@@ -86,16 +86,20 @@ export default function createPlayer(canvas, audio, aliens) {
 						window.location = window.location;
 					}
 				} else {
-					if (missile.y > player.sprite.y - this.dodgeRange && missile.y < player.sprite.y - (player.sprite.height / 2) - (missile.height / 2)) {
-						let dodgeSpeed = 2;
-						if (player.sprite.y - missile.y < player.sprite.height * 2) {
-							dodgeSpeed = 3;
-							this.chooseTarget();
+					if (missile.y > this.sprite.y - this.dodgeRange && missile.y < this.sprite.y - (this.sprite.height / 2) - (missile.height / 2)) {
+						let dodgeSpeed = 3;
+						if (this.sprite.y - missile.y < this.sprite.height * 2) {
+							dodgeSpeed = 4;
+							// this.chooseTarget();
 						}
 
-						if (missile.x > player.sprite.x - (player.sprite.width * 1.5) && missile.y < player.sprite.y) {
+						// if (missile.x > this.sprite.x - (this.sprite.width * 1.5) && missile.x <= this.sprite.x + (this.sprite.width * 1.5)) {
+						// 	this.sprite.dx = Math.sign(this.sprite.dx) * this.speed * dodgeSpeed;
+						// }
+
+						if (missile.x > this.sprite.x - (this.sprite.width * 1.5) && missile.y < this.sprite.y) {
 							this.sprite.dx = this.speed * dodgeSpeed;
-						} else if (missile.x <= player.sprite.x + (player.sprite.width * 1.5) && missile.y > player.sprite.y) {
+						} else if (missile.x <= this.sprite.x + (this.sprite.width * 1.5) && missile.y > this.sprite.y) {
 							this.sprite.dx = -1 * this.speed * dodgeSpeed;
 						}
 					}

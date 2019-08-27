@@ -14,7 +14,7 @@ function sortByY(alpha, beta) {
 	return (alpha.y > beta.y) ? 1 : (beta.y > alpha.y) ? -1 : 0;
 }
 
-export default function createAliens(canvas, audio) {
+export default function createAliens(canvas, audio, events) {
 	let aliens = {
 		// STATIC
 		cooldown: 1000,

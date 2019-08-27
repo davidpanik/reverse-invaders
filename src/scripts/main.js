@@ -1,18 +1,20 @@
 /*
 
 TODO
-	Make player more likely to aim for end aliens
+	Indicate which aliens are about to fire
+	Better player dodging	
+	Increase alien speed as game progresses
 	Add Event System
 	Add buttons on mobile
-	Add audio toggle button
-	Partical collision effects
-	Sound effects
-	Indicate which aliens are about to fire
 	Add sprites
+	Add audio toggle button
+	Sound effects
+	Partical collision effects
+	Intro screen
+	Handle game end
 	Add special alien
 	Bring a dead alien back when special alien crosses the screen
-	Increase alien speed as game progresses
-	Handle game end
+	Add ghosting to screen
 
 	https://reverse-invaders.netlify.com/
 
@@ -23,14 +25,17 @@ import { init, GameLoop } from './vendor/kontra';
 import createAliens from './aliens';
 import createPlayer from './player';
 import createAudio from './audio';
+import Events from './events';
 
 let { canvas } = init();
 
 canvas.gutter = 10;
 
 let audio = createAudio();
-let aliens = createAliens(canvas, audio);
-let player = createPlayer(canvas, audio, aliens);
+let events = new Events();
+let aliens = createAliens(canvas, audio, events);
+let player = createPlayer(canvas, audio, events, aliens);
+
 
 let loop = new GameLoop({
 	update: function () {
