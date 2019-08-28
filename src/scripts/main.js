@@ -2,8 +2,8 @@
 
 TODO
 	Indicate which aliens are about to fire
-	Better player dodging	
-	Increase alien speed as game progresses
+	Better player dodging
+	Stop player flickering about
 	Add Event System
 	Add buttons on mobile
 	Add sprites

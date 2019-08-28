@@ -35,6 +35,8 @@ export default function createPlayer(canvas, audio, events, aliens) {
 
 		// FUNCTIONS
 		update: function () {
+			this.speed = aliens.speed * 0.8;
+
 			if (this.sprite.x < this.target.x) {
 				this.sprite.dx = this.speed;
 			} else if (this.sprite.x > this.target.x) {

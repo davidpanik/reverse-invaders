@@ -24,9 +24,10 @@ export default function createAliens(canvas, audio, events) {
 		height: 40,
 		spacing: 20,
 		descent: 0.1,
+		maxSpeed: 8,
 
 		// VARIABLE
-		speed: 2,
+		speed: 1,
 		firingFrom: '',
 
 		// DISPLAY
@@ -68,6 +69,8 @@ export default function createAliens(canvas, audio, events) {
 				alert('GAME OVER');
 				window.location = window.location;
 			}
+
+			this.speed = (this.maxSpeed + 1) - ((this.getAlive().length / this.sprites.length) * this.maxSpeed);
 
 			this.getAlive().forEach((alien) => alien.update());
 			this.missiles.update();
