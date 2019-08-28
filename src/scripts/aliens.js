@@ -38,6 +38,9 @@ export default function createAliens(canvas, audio, events) {
 		missiles: new Pool({
 			create: Sprite
 		}),
+		sparks: new Pool({
+			create: Sprite
+		}),
 
 		// FUNCTIONS	
 		init: function () {
@@ -76,6 +79,7 @@ export default function createAliens(canvas, audio, events) {
 
 			this.getAlive().forEach((alien) => alien.update());
 			this.missiles.update();
+			this.sparks.update();
 
 			this.getColumns(this.firingFrom).forEach((alien) => {
 				if (this.weaponsReady && !alien.aboutToFire) {
@@ -135,6 +139,7 @@ export default function createAliens(canvas, audio, events) {
 		render: function () {
 			this.getAlive().forEach((alien) => alien.render());
 			this.missiles.render();
+			this.sparks.render();
 		},
 
 		// HELPERES

@@ -1,5 +1,5 @@
 import { Sprite, Pool } from './vendor/kontra';
-import { chance, randomFromArray } from './random';
+import { chance, random, randomFromArray } from './random';
 
 const center = {
 	x: 0.5,
@@ -72,6 +72,20 @@ export default function createPlayer(canvas, audio, events, aliens) {
 					if (missile.collidesWith(alien)) {
 						alien.alive = false;
 						missile.ttl = 0;
+
+						for (let x = 0; x < random(20, 40); x++) {
+							aliens.sparks.get({
+								x: alien.x + (alien.width / 2),
+								y: alien.y + (alien.height / 2),
+								color: 'red',
+								width: 2,
+								height: 2,
+								anchor: center,
+								dx: random(-300, 300) / 100,
+								dy: random(-300, 300) / 100,
+								ttl: random(20, 40)
+							});
+						}
 					}
 				});
 			});
