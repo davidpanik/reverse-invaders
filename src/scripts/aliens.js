@@ -17,7 +17,9 @@ function sortByY(alpha, beta) {
 export default function createAliens(canvas, audio, events) {
 	let aliens = {
 		// STATIC
-		cooldown: 1000,
+		fireDelay: 1000,
+		cooldown: 2000,
+		switchingInterval: 3000,
 		rows: 4,
 		columns: 10,
 		width: 40,
@@ -29,6 +31,7 @@ export default function createAliens(canvas, audio, events) {
 		// VARIABLE
 		speed: 1,
 		firingFrom: '',
+		weaponsReady: true,
 
 		// DISPLAY
 		sprites: [],
@@ -50,8 +53,7 @@ export default function createAliens(canvas, audio, events) {
 						height: this.height,
 						anchor: center,
 						alive: true,
-						aboutToFire: false,
-						weaponReady: true
+						aboutToFire: false
 					}));
 				}
 			}
@@ -62,7 +64,7 @@ export default function createAliens(canvas, audio, events) {
 				} else {
 					this.firingFrom = 'odd';
 				}
-			}, 1000);
+			}, this.switchingInterval);
 		},
 		update: function () {
 			if (this.getAlive().length <= 0) {
@@ -76,8 +78,11 @@ export default function createAliens(canvas, audio, events) {
 			this.missiles.update();
 
 			this.getColumns(this.firingFrom).forEach((alien) => {
-				if (chance(80)) {
-					if (alien.weaponReady) {
+				if (this.weaponsReady && !alien.aboutToFire) {
+					alien.aboutToFire = true;
+					alien.color = 'yellow';						
+
+					setTimeout(() => {
 						this.missiles.get({
 							x: alien.x,
 							y: alien.y + (alien.height / 2),
@@ -90,12 +95,17 @@ export default function createAliens(canvas, audio, events) {
 						});
 
 						audio.play('alienShoot');
+						this.weaponsReady = false;
 
-						alien.weaponReady = false;
 						setTimeout(() => {
-							alien.weaponReady = true;
+							alien.aboutToFire = false;
+							alien.color = 'blue';
+						}, 500);
+
+						setTimeout(() => {
+							this.weaponsReady = true;
 						}, this.cooldown);
-					}
+					}, this.fireDelay);
 				}
 
 				if (alien.y + (alien.height / 2) > canvas.height) {

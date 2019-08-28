@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Indicate which aliens are about to fire
 	Better player dodging
 	Stop player flickering about
 	Add Event System
