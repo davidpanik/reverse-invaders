@@ -32,6 +32,9 @@ export default function createPlayer(canvas, audio, events, aliens) {
 		missiles: new Pool({
 			create: Sprite
 		}),
+		sparks: new Pool({
+			create: Sprite
+		}),
 
 		// FUNCTIONS
 		update: function () {
@@ -73,19 +76,7 @@ export default function createPlayer(canvas, audio, events, aliens) {
 						alien.alive = false;
 						missile.ttl = 0;
 
-						for (let x = 0; x < random(20, 40); x++) {
-							aliens.sparks.get({
-								x: alien.x + (alien.width / 2),
-								y: alien.y + (alien.height / 2),
-								color: 'red',
-								width: 2,
-								height: 2,
-								anchor: center,
-								dx: random(-300, 300) / 100,
-								dy: random(-300, 300) / 100,
-								ttl: random(20, 40)
-							});
-						}
+						createSparks(aliens, alien, 'red');
 					}
 				});
 			});
@@ -96,6 +87,8 @@ export default function createPlayer(canvas, audio, events, aliens) {
 					this.lives -= 1;
 
 					this.updateDisplay();
+
+					createSparks(this, this.sprite, 'green');
 
 					if (this.lives <= 0) {
 						alert('YOU WIN');
@@ -153,10 +146,12 @@ export default function createPlayer(canvas, audio, events, aliens) {
 
 			this.sprite.update();
 			this.missiles.update();
+			this.sparks.update();
 		},
 		render: function () {
-			this.sprite.render();
+			this.sparks.render();
 			this.missiles.render();
+			this.sprite.render();
 		},
 		updateDisplay: function() {
 			document.getElementById('playerLives').innerHTML = 'Lives: ' + this.lives;
@@ -171,5 +166,23 @@ export default function createPlayer(canvas, audio, events, aliens) {
 	player.updateDisplay();
 	player.chooseTarget();
 
+	function createSparks(owner, source, color) {
+		for (let x = 0; x < random(20, 40); x++) {
+			let size = 5;
+
+			owner.sparks.get({
+				x: source.x + (source.width / 2),
+				y: source.y + (source.height / 2),
+				color: color,
+				width: size,
+				height: size,
+				anchor: center,
+				dx: random(-300, 300) / 100,
+				dy: random(-300, 300) / 100,
+				ttl: random(20, 60)
+			});
+		}
+	}
+	
 	return player;
 }

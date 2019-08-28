@@ -137,9 +137,9 @@ export default function createAliens(canvas, audio, events) {
 			});
 		},
 		render: function () {
-			this.getAlive().forEach((alien) => alien.render());
-			this.missiles.render();
 			this.sparks.render();
+			this.missiles.render();
+			this.getAlive().forEach((alien) => alien.render());
 		},
 
 		// HELPERES
