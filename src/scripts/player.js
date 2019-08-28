@@ -92,7 +92,7 @@ export default function createPlayer(canvas, audio, events, aliens) {
 
 					if (this.lives <= 0) {
 						alert('YOU WIN');
-						window.location = window.location;
+						// window.location = window.location;
 					}
 				} else {
 					if (missile.y > this.sprite.y - this.dodgeRange && missile.y < this.sprite.y - (this.sprite.height / 2) - (missile.height / 2)) {
@@ -124,8 +124,8 @@ export default function createPlayer(canvas, audio, events, aliens) {
 
 					if (this.lives <= 0) {
 						alert('YOU WIN');
-						window.location = window.location;
-					}					
+						// window.location = window.location;
+					}
 				}
 			});
 

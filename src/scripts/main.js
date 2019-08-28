@@ -8,12 +8,10 @@ TODO
 	Add sprites
 	Add audio toggle button
 	Sound effects
-	Partical collision effects
 	Intro screen
 	Handle game end
 	Add special alien
 	Bring a dead alien back when special alien crosses the screen
-	Add ghosting to screen
 
 	https://reverse-invaders.netlify.com/
 
@@ -25,8 +23,9 @@ import createAliens from './aliens';
 import createPlayer from './player';
 import createAudio from './audio';
 import Events from './events';
+import './ghosting';
 
-let { canvas } = init();
+let { canvas } = init('mainCanvas');
 
 canvas.gutter = 10;
 

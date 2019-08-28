@@ -72,7 +72,7 @@ export default function createAliens(canvas, audio, events) {
 		update: function () {
 			if (this.getAlive().length <= 0) {
 				alert('GAME OVER');
-				window.location = window.location;
+				// window.location = window.location;
 			}
 
 			this.speed = (this.maxSpeed + 1) - ((this.getAlive().length / this.sprites.length) * this.maxSpeed);
@@ -114,7 +114,7 @@ export default function createAliens(canvas, audio, events) {
 
 				if (alien.y + (alien.height / 2) > canvas.height) {
 					alert('YOU WIN');
-					window.location = window.location;
+					// window.location = window.location;
 				}
 			});
 
