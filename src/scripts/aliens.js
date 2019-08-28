@@ -21,11 +21,11 @@ export default function createAliens(canvas, audio, events) {
 		cooldown: 2000,
 		switchingInterval: 3000,
 		rows: 4,
-		columns: 10,
+		columns: 8,
 		width: 40,
 		height: 40,
-		spacing: 20,
-		descent: 0.1,
+		spacing: 30,
+		descent: 0.05,
 		maxSpeed: 8,
 
 		// VARIABLE
