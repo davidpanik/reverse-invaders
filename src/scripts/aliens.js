@@ -1,4 +1,5 @@
-import { Sprite, Pool, initKeys, keyPressed } from './vendor/kontra';
+import { Sprite, Pool } from './vendor/kontra';
+import { leftPressed, rightPressed } from './keys';
 import { chance } from './random';
 
 const center = {
@@ -118,13 +119,13 @@ export default function createAliens(canvas, audio, events) {
 				}
 			});
 
-			if (keyPressed('left')) {
+			if (leftPressed()) {
 				if (this.getLeftMost().x > canvas.gutter + (this.width / 2)) {
 					this.sprites.forEach((alien) => {
 						alien.x -= this.speed;
 					});
 				}
-			} else if (keyPressed('right')) {
+			} else if (rightPressed()) {
 				if (this.getRightMost().x < canvas.width - canvas.gutter - (this.width / 2)) {
 					this.sprites.forEach((alien) => {
 						alien.x += this.speed;
@@ -190,7 +191,6 @@ export default function createAliens(canvas, audio, events) {
 		}
 	};
 
-	initKeys();
 	aliens.init();
 
 	return aliens;
