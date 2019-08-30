@@ -29,7 +29,7 @@ body {
 	box-sizing: border-box;
 }
 
-.screen {
+#screen {
 	filter: saturate(3);
 	position: relative;
 	display: inline-block;
@@ -57,7 +57,7 @@ canvas {
 	border: 2px solid green;
 }
 
-.overlay {
+#overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -83,9 +83,9 @@ canvas {
 	}
 }
 
-.screen,
+#screen,
 canvas,
-.overlay {
+#overlay {
 	border-radius: 20px;
 }
 

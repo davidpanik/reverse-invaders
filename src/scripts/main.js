@@ -6,7 +6,6 @@ TODO
 	Better player dodging
 	Stop player flickering about
 	Add Event System
-	Scale game to screen size
 	Test on mobile
 	Add sprites
 	Add audio toggle button
@@ -28,6 +27,7 @@ import Audio from './audio';
 import Events from './events';
 import './ghosting';
 import './mobileCheck';
+import './scaling';
 
 let { canvas } = init('mainCanvas');
 
