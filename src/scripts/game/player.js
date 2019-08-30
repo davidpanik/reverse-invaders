@@ -1,28 +1,10 @@
 import { Sprite, Pool } from '../vendor/kontra';
-import { chance, random, randomFromArray } from '../util/random';
+import { chance, randomFromArray } from '../util/random';
 
 const center = {
 	x: 0.5,
 	y: 0.5
 };
-
-function createSparks(owner, source, color) {
-	for (let x = 0; x < random(20, 40); x++) {
-		let size = 5;
-
-		owner.sparks.get({
-			x: source.x + (source.width / 2),
-			y: source.y + (source.height / 2),
-			color: color,
-			width: size,
-			height: size,
-			anchor: center,
-			dx: random(-300, 300) / 100,
-			dy: random(-300, 300) / 100,
-			ttl: random(20, 60)
-		});
-	}
-}
 
 class Player {
 	constructor(canvas, audio, events, aliens) {
@@ -117,12 +99,9 @@ class Player {
 		this.missiles.getAliveObjects().forEach((missile) => {
 			this.aliens.getAlive().forEach((alien) => {
 				if (missile.collidesWith(alien)) {
-					alien.alive = false;
 					missile.ttl = 0;
 
-					this.audio.play('blow');
-
-					createSparks(this.aliens, alien, 'red');
+					this.events.emit('ALIEN_KILLED', alien);
 				}
 			});
 		});
@@ -131,17 +110,8 @@ class Player {
 		this.aliens.missiles.getAliveObjects().forEach((missile) => {
 			if (missile.collidesWith(this.sprite)) {
 				missile.ttl = 0;
-				this.lives -= 1;
 
-				this.updateDisplay();
-
-				this.audio.play('explosion');
-				createSparks(this, this.sprite, 'green');
-
-				if (this.lives <= 0) {
-					alert('YOU WIN');
-					window.location = window.location;
-				}
+				this.events.emit('PLAYER_LOSE_LIFE');
 			} else {
 				if (missile.y > this.sprite.y - this.dodgeRange && missile.y < this.sprite.y - (this.sprite.height / 2) - (missile.height / 2)) {
 					let dodgeSpeed = 3;
@@ -166,18 +136,9 @@ class Player {
 	alienPlayerCollissions() {
 		this.aliens.getAlive().forEach((alien) => {
 			if (alien.collidesWith(this.sprite)) {
-				this.lives -= 1;
 				alien.alive = false;
 
-				this.updateDisplay();
-
-				this.audio.play('explosion');
-				createSparks(this, this.sprite, 'green');
-
-				if (this.lives <= 0) {
-					alert('YOU WIN');
-					window.location = window.location;
-				}
+				this.events.emit('PLAYER_LOSE_LIFE');
 			}
 		});
 	}

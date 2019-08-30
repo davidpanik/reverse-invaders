@@ -91,8 +91,7 @@ class Aliens {
 	}
 	checkStillAlive() {
 		if (this.getAlive().length <= 0) {
-			alert('GAME OVER');
-			window.location = window.location;
+			this.events.emit('ALL_ALIENS_DEAD');
 		}
 	}
 	workOutSpeed() {
@@ -134,8 +133,7 @@ class Aliens {
 	checkForHittingBottom() {
 		this.getColumns(this.firingFrom).forEach((alien) => {
 			if (alien.y + (alien.height / 2) > this.canvas.height) {
-				alert('YOU WIN');
-				window.location = window.location;
+				this.events.emit('ALIENS_REACHED_BOTTOM');
 			}
 		});
 	}
