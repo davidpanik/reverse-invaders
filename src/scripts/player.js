@@ -104,7 +104,7 @@ class Player {
 					ttl: this.canvas.height
 				});
 
-				this.audio.play('playerShoot');
+				this.audio.play('shot');
 
 				this.weaponReady = false;
 				setTimeout(() => {
@@ -120,6 +120,8 @@ class Player {
 					alien.alive = false;
 					missile.ttl = 0;
 
+					this.audio.play('blow');
+
 					createSparks(this.aliens, alien, 'red');
 				}
 			});
@@ -133,6 +135,7 @@ class Player {
 
 				this.updateDisplay();
 
+				this.audio.play('explosion');
 				createSparks(this, this.sprite, 'green');
 
 				if (this.lives <= 0) {
@@ -167,6 +170,9 @@ class Player {
 				alien.alive = false;
 
 				this.updateDisplay();
+
+				this.audio.play('explosion');
+				createSparks(this, this.sprite, 'green');
 
 				if (this.lives <= 0) {
 					alert('YOU WIN');

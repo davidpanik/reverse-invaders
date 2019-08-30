@@ -9,7 +9,6 @@ TODO
 	Test on mobile
 	Add sprites
 	Add audio toggle button
-	Better sound effects
 	Intro screen
 	Handle game end
 	Add special alien

@@ -117,7 +117,7 @@ class Aliens {
 						ttl: this.canvas.height
 					});
 
-					this.audio.play('alienShoot');
+					this.audio.play('pew');
 					this.weaponsReady = false;
 
 					setTimeout(() => {
