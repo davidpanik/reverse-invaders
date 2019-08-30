@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Refactor to use classes
 	Reduce filesize
 	Break up logic
 	Better player dodging
@@ -23,9 +22,9 @@ TODO
 
 
 import { init, GameLoop } from './vendor/kontra';
-import createAliens from './aliens';
-import createPlayer from './player';
-import createAudio from './audio';
+import Aliens from './aliens';
+import Player from './player';
+import Audio from './audio';
 import Events from './events';
 import './ghosting';
 import './mobileCheck';
@@ -34,10 +33,10 @@ let { canvas } = init('mainCanvas');
 
 canvas.gutter = 10;
 
-let audio = createAudio();
+let audio = new Audio();
 let events = new Events();
-let aliens = createAliens(canvas, audio, events);
-let player = createPlayer(canvas, audio, events, aliens);
+let aliens = new Aliens(canvas, audio, events);
+let player = new Player(canvas, audio, events, aliens);
 
 
 let loop = new GameLoop({
