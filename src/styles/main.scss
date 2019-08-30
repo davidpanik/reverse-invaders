@@ -28,6 +28,10 @@ body {
 	box-sizing: border-box;
 }
 
+button {
+	font-family: $font-family;
+}
+
 #screen {
 	filter: saturate(3);
 	position: relative;
@@ -86,17 +90,53 @@ canvas {
 canvas,
 #overlay {
 	border-radius: 20px;
+	pointer-events: none;
+}
+
+#audioToggle {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	pointer-events: initial;
+	color: red;
+
+	&::after {
+		content: " ";
+		display: block;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		background: red;
+		position: absolute;
+		top: 40%;
+		right: 0;
+	}
+
+	&.active {
+		color: green;
+
+		&::after {
+			background: green;
+		}
+	}
 }
 
 #playerLives {
 	position: absolute;
 	top: 0;
 	right: 0;
-	font-size: 30px;
-	padding: 0.8em;
 	color: red;
+}
+
+#audioToggle,
+#playerLives {
+	font-size: 30px;
 	font-weight: bold;
-	text-transform: uppercase;
+	text-transform: uppercase;	
+	padding: 0.8em;
 }
 
 #leftButton,

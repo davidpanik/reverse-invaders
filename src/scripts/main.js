@@ -8,7 +8,6 @@ TODO
 	Add Event System
 	Test on mobile
 	Add sprites
-	Add audio toggle button
 	Intro screen
 	Handle game end
 	Add special alien
