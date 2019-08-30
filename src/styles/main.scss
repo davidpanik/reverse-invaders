@@ -9,7 +9,7 @@ $color-green: #01F001;
 $color-cyan: #00F0F1;
 $color-purple: #F200F2;
 $border-width: 2em;
-$font-family: Courier, sans-serif;
+$font-family: 'VT323', monospace;
 
 body {
 	font-family: $font-family;
@@ -22,7 +22,6 @@ body {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	font-family: 'VT323', monospace;
 }
 
 * {

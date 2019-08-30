@@ -1,4 +1,4 @@
-import { initKeys, keyPressed } from './vendor/kontra';
+import { initKeys, keyPressed } from '../vendor/kontra';
 
 initKeys();
 

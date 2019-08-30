@@ -1,4 +1,4 @@
-import SoundFX from './vendor/soundfx';
+import SoundFX from '../vendor/soundfx';
 
 class Audio {
 	constructor() {

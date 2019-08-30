@@ -1,6 +1,5 @@
-import { Sprite, Pool } from './vendor/kontra';
-import { leftPressed, rightPressed } from './keys';
-import { chance } from './random';
+import { Sprite, Pool } from '../vendor/kontra';
+import { leftPressed, rightPressed } from '../util/keys';
 
 const center = {
 	x: 0.5,

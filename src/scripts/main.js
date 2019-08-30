@@ -20,13 +20,13 @@ TODO
 
 
 import { init, GameLoop } from './vendor/kontra';
-import Aliens from './aliens';
-import Player from './player';
-import Audio from './audio';
-import Events from './events';
-import './ghosting';
-import './mobileCheck';
-import './scaling';
+import Aliens from './game/aliens';
+import Player from './game/player';
+import Audio from './util/audio';
+import Events from './util/events';
+import './interface/ghosting';
+import './interface/mobileCheck';
+import './interface/scaling';
 
 let { canvas } = init('mainCanvas');
 

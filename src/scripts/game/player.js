@@ -1,5 +1,5 @@
-import { Sprite, Pool } from './vendor/kontra';
-import { chance, random, randomFromArray } from './random';
+import { Sprite, Pool } from '../vendor/kontra';
+import { chance, random, randomFromArray } from '../util/random';
 
 const center = {
 	x: 0.5,
