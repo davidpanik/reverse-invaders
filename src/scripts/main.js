@@ -2,7 +2,7 @@
 
 TODO
 	Reduce filesize
-	Break up logic
+	Make player and aliens less tightly linked
 	Better player dodging
 	Stop player flickering about
 	Add Event System
@@ -10,7 +10,7 @@ TODO
 	Test on mobile
 	Add sprites
 	Add audio toggle button
-	Sound effects
+	Better sound effects
 	Intro screen
 	Handle game end
 	Add special alien

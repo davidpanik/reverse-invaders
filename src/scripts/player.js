@@ -65,8 +65,23 @@ class Player {
 
 	// FUNCTIONS
 	update() {
-		this.speed = this.aliens.speed * 0.8;
+		this.workOutSpeed();
+		this.moveTowardsTarget();
+		this.fireMissiles();
+		this.playerMissileCollissions();
+		this.alienMissileCollissions();
+		this.alienPlayerCollissions();
+		this.changeTarget();
+		this.hitEdges();
 
+		this.sprite.update();
+		this.missiles.update();
+		this.sparks.update();
+	}
+	workOutSpeed() {
+		this.speed = this.aliens.speed * 0.8;
+	}
+	moveTowardsTarget() {
 		if (this.sprite.x < this.target.x) {
 			this.sprite.dx = this.speed;
 		} else if (this.sprite.x > this.target.x) {
@@ -74,7 +89,8 @@ class Player {
 		} else {
 			this.sprite.dx = 0;
 		}
-
+	}
+	fireMissiles() {
 		if ((this.sprite.x > this.target.x - this.firingRange && this.sprite.x < this.target.x * this.firingRange) || chance(100)) {
 			if (this.weaponReady === true) {
 				this.missiles.get({
@@ -96,7 +112,8 @@ class Player {
 				}, this.cooldown);
 			}
 		}
-
+	}
+	playerMissileCollissions() {
 		this.missiles.getAliveObjects().forEach((missile) => {
 			this.aliens.getAlive().forEach((alien) => {
 				if (missile.collidesWith(alien)) {
@@ -107,7 +124,8 @@ class Player {
 				}
 			});
 		});
-
+	}
+	alienMissileCollissions() {
 		this.aliens.missiles.getAliveObjects().forEach((missile) => {
 			if (missile.collidesWith(this.sprite)) {
 				missile.ttl = 0;
@@ -141,7 +159,8 @@ class Player {
 				}
 			}
 		});
-
+	}
+	alienPlayerCollissions() {
 		this.aliens.getAlive().forEach((alien) => {
 			if (alien.collidesWith(this.sprite)) {
 				this.lives -= 1;
@@ -155,12 +174,13 @@ class Player {
 				}
 			}
 		});
-
+	}
+	changeTarget() {
 		if (!this.target.alive || chance(800)) {
 			this.chooseTarget();
 		}
-
-		// Bounce on edges
+	}
+	hitEdges()	 {
 		if (this.sprite.x > this.canvas.width - this.canvas.gutter - (this.sprite.width / 2)) {
 			this.sprite.dx *= -1;
 			this.sprite.x = this.canvas.width - this.canvas.gutter - (this.sprite.width / 2);
@@ -170,10 +190,6 @@ class Player {
 			this.sprite.dx *= -1;
 			this.sprite.x = this.canvas.gutter + (this.sprite.width / 2);
 		}
-
-		this.sprite.update();
-		this.missiles.update();
-		this.sparks.update();
 	}
 	render() {
 		this.sparks.render();

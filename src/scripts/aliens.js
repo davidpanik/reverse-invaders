@@ -47,6 +47,10 @@ class Aliens {
 			create: Sprite
 		});
 
+		this.populateGrid();
+		this.handleSwitching();
+	}
+	populateGrid() {
 		let offsetLeft = (this.canvas.width - (this.columns * this.width) - ((this.columns - 1) * this.spacing)) / 2;
 
 		for (let row = 0; row < this.rows; row++) {
@@ -63,7 +67,8 @@ class Aliens {
 				}));
 			}
 		}
-
+	}
+	handleSwitching() {
 		setInterval(() => {
 			if (this.firingFrom === 'odd') {
 				this.firingFrom = 'even';
@@ -74,17 +79,27 @@ class Aliens {
 	}
 
 	update () {
-		if (this.getAlive().length <= 0) {
-			alert('GAME OVER');
-			window.location = window.location;
-		}
-
-		this.speed = (this.maxSpeed + 1) - ((this.getAlive().length / this.sprites.length) * this.maxSpeed);
+		this.checkStillAlive();
+		this.workOutSpeed();
+		this.fireMissiles();
+		this.checkForHittingBottom();
+		this.handleInput();
+		this.moveDownwards();
 
 		this.getAlive().forEach((alien) => alien.update());
 		this.missiles.update();
 		this.sparks.update();
-
+	}
+	checkStillAlive() {
+		if (this.getAlive().length <= 0) {
+			alert('GAME OVER');
+			window.location = window.location;
+		}
+	}
+	workOutSpeed() {
+		this.speed = (this.maxSpeed + 1) - ((this.getAlive().length / this.sprites.length) * this.maxSpeed);
+	}
+	fireMissiles() {
 		this.getColumns(this.firingFrom).forEach((alien) => {
 			if (this.weaponsReady && !alien.aboutToFire) {
 				alien.aboutToFire = true;
@@ -115,13 +130,17 @@ class Aliens {
 					}, this.cooldown);
 				}, this.fireDelay);
 			}
-
+		});
+	}
+	checkForHittingBottom() {
+		this.getColumns(this.firingFrom).forEach((alien) => {
 			if (alien.y + (alien.height / 2) > this.canvas.height) {
 				alert('YOU WIN');
 				window.location = window.location;
 			}
 		});
-
+	}
+	handleInput() {
 		if (leftPressed()) {
 			if (this.getLeftMost().x > this.canvas.gutter + (this.width / 2)) {
 				this.sprites.forEach((alien) => {
@@ -135,7 +154,8 @@ class Aliens {
 				});
 			}
 		}
-
+	}
+	moveDownwards() {
 		this.sprites.forEach((alien) => {
 			alien.y += this.descent;
 		});
