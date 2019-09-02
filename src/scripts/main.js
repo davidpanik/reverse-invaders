@@ -1,15 +1,16 @@
 /*
 
 TODO
-	Reduce filesize
+	Aliens are all firing at once now
 	Better player dodging
 	Stop player flickering about
 	Record time taken to win game
-	Make player and aliens less tightly linked
+	Reduce filesize
 	Add sprites
 	Test on mobile
-	Intro screen
 	Handle game end
+	Intro screen
+	Make player and aliens less tightly linked
 	Add special alien
 	Bring a dead alien back when special alien crosses the screen
 
@@ -83,17 +84,11 @@ events.on('PLAYER_LOSE_LIFE', () => {
 	audio.play('explosion');
 	createSparks(player, player.sprite, 'green');
 
-	player.sprite.x = canvas.width / 2;
-	player.sprite.dx = 0;
-	player.chooseTarget();
-	player.recharging = true;
-	setTimeout(() => {
-		player.recharging = false
-	}, player.rechargeTime);
-
 	if (player.lives <= 0) {
 		alert('YOU WIN');
 		newGame();
+	} else {
+		player.respawn();
 	}
 });
 

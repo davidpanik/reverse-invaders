@@ -15,13 +15,15 @@ class Player {
 		this.speed = 1;
 		this.firingRange = 70;
 		this.dodgeRange = 200;
-		this.rechargeTime = 3000;
+		this.rechargeTime = 2000;
+		this.invincibilityTime = 4000;
 
 		// VARIABLE
 		this.weaponReady = true;
 		this.lives = 10;
 		this.target = null;
 		this.recharging = false;
+		this.invincible = false;
 
 		// DISPLAY
 		this.sprite = new Sprite({
@@ -50,13 +52,16 @@ class Player {
 			this.workOutSpeed();
 			this.moveTowardsTarget();
 			this.fireMissiles();
-			this.alienMissileCollissions();
 			this.playerMissileDodging();
-			this.alienPlayerCollissions();
 			this.changeTarget();
 			this.hitEdges();
 		} else {
 			this.sprite.dx = 0;
+		}
+
+		if (!this.invincible) {
+			this.alienMissileCollissions();
+			this.alienPlayerCollissions();
 		}
 
 		this.playerMissileCollissions();
@@ -172,7 +177,7 @@ class Player {
 		this.sparks.render();
 		this.missiles.render();
 		let date = new Date();
-		if (!this.recharging || date.getMilliseconds() / 100 < 5) {
+		if (!this.invincible || date.getMilliseconds() / 100 < 5) {
 			this.sprite.render();
 		}
 	}
@@ -183,6 +188,21 @@ class Player {
 	// HELPERS
 	chooseTarget() {
 		this.target = randomFromArray(this.aliens.getLowest());
+	}
+	respawn() {
+		this.sprite.x = this.canvas.width / 2;
+		this.sprite.dx = 0;
+		this.chooseTarget();
+		this.recharging = true;
+		this.invincible = true;
+
+		setTimeout(() => {
+			this.recharging = false;
+		}, this.rechargeTime);
+
+		setTimeout(() => {
+			this.invincible = false;
+		}, this.invincibilityTime);
 	}
 }
 
