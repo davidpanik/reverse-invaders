@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Aliens are all firing at once now
 	Better player dodging
 	Stop player flickering about
 	Record time taken to win game

@@ -187,7 +187,15 @@ class Player {
 
 	// HELPERS
 	chooseTarget() {
-		this.target = randomFromArray(this.aliens.getLowest());
+		if (chance(2)) {
+			this.target = randomFromArray(this.aliens.getLowest()); // Choose a random target
+		} else {
+			this.target = this.aliens.getLowest().sort((alpha, beta) => {
+				let alphaDistance = Math.abs(alpha.x - this.sprite.x);
+				let betaDistance = Math.abs(beta.x - this.sprite.x);
+				return (alphaDistance > betaDistance) ? 1 : (betaDistance > alphaDistance) ? -1 : 0;
+			})[0]; // Choose the nearest target
+		}
 	}
 	respawn() {
 		this.sprite.x = this.canvas.width / 2;
