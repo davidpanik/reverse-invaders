@@ -96,7 +96,7 @@ class Aliens {
 		this.speed = (this.maxSpeed + 1) - ((this.getAlive().length / this.sprites.length) * this.maxSpeed);
 	}
 	fireMissiles() {
-		this.getColumns(this.firingFrom).forEach((alien) => {
+		this.getColumns(this.getAlive().length > 1 ? this.firingFrom : 'all').forEach((alien) => {
 			if (this.weaponsReady && !alien.aboutToFire) {
 				alien.aboutToFire = true;
 				alien.color = 'yellow';

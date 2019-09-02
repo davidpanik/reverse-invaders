@@ -27,7 +27,7 @@ class Player {
 
 		// VARIABLE
 		this.weaponReady = true;
-		this.lives = 10;
+		this.lives = 5;
 		this.target = null;
 		this.recharging = false;
 		this.invincible = false;
@@ -59,7 +59,9 @@ class Player {
 			this.workOutSpeed();
 			this.moveTowardsTarget();
 			this.fireMissiles();
-			this.playerMissileDodging();
+			// if (!chance(4)) {
+				this.playerMissileDodging();
+			// }
 			this.changeTarget();
 			this.hitEdges();
 		} else {
