@@ -2,12 +2,12 @@
 
 TODO
 	Reduce filesize
-	Make player and aliens less tightly linked
 	Better player dodging
 	Stop player flickering about
-	Add Event System
-	Test on mobile
+	Record time taken to win game
+	Make player and aliens less tightly linked
 	Add sprites
+	Test on mobile
 	Intro screen
 	Handle game end
 	Add special alien

@@ -49,6 +49,7 @@ class Player {
 		this.fireMissiles();
 		this.playerMissileCollissions();
 		this.alienMissileCollissions();
+		this.playerMissileDodging();
 		this.alienPlayerCollissions();
 		this.changeTarget();
 		this.hitEdges();
@@ -61,9 +62,9 @@ class Player {
 		this.speed = this.aliens.speed * 0.8;
 	}
 	moveTowardsTarget() {
-		if (this.sprite.x < this.target.x) {
+		if (this.sprite.x < this.target.x - 10) {
 			this.sprite.dx = this.speed;
-		} else if (this.sprite.x > this.target.x) {
+		} else if (this.sprite.x > this.target.x + 10) {
 			this.sprite.dx = -1 * this.speed;
 		} else {
 			this.sprite.dx = 0;
@@ -109,27 +110,30 @@ class Player {
 				missile.ttl = 0;
 
 				this.events.emit('PLAYER_LOSE_LIFE');
-			} else {
-				if (missile.y > this.sprite.y - this.dodgeRange && missile.y < this.sprite.y - (this.sprite.height / 2) - (missile.height / 2)) {
-					let dodgeSpeed = 3;
-					if (this.sprite.y - missile.y < this.sprite.height * 2) {
-						dodgeSpeed = 4;
-						// this.chooseTarget();
-					}
-
-					// if (missile.x > this.sprite.x - (this.sprite.width * 1.5) && missile.x <= this.sprite.x + (this.sprite.width * 1.5)) {
-					// 	this.sprite.dx = Math.sign(this.sprite.dx) * this.speed * dodgeSpeed;
-					// }
-
-					if (missile.x > this.sprite.x - (this.sprite.width * 1.5) && missile.y < this.sprite.y) {
-						this.sprite.dx = this.speed * dodgeSpeed;
-					} else if (missile.x <= this.sprite.x + (this.sprite.width * 1.5) && missile.y > this.sprite.y) {
-						this.sprite.dx = -1 * this.speed * dodgeSpeed;
-					}
-				}
 			}
 		});
 	}
+	playerMissileDodging() {
+		this.aliens.missiles.getAliveObjects().forEach((missile) => {
+			if (missile.y > this.sprite.y - this.dodgeRange && missile.y < this.sprite.y - (this.sprite.height / 2) - (missile.height / 2)) {
+				let dodgeSpeed = 3;
+				if (this.sprite.y - missile.y < this.sprite.height * 2) {
+					dodgeSpeed = 4;
+					// this.chooseTarget();
+				}
+
+				// if (missile.x > this.sprite.x - (this.sprite.width * 1.5) && missile.x <= this.sprite.x + (this.sprite.width * 1.5)) {
+				// 	this.sprite.dx = Math.sign(this.sprite.dx) * this.speed * dodgeSpeed;
+				// }
+
+				// if (missile.x > this.sprite.x - (this.sprite.width * 1.5) && missile.y < this.sprite.y) {
+				// 	this.sprite.dx = this.speed * dodgeSpeed;
+				// } else if (missile.x <= this.sprite.x + (this.sprite.width * 1.5) && missile.y > this.sprite.y) {
+				// 	this.sprite.dx = -1 * this.speed * dodgeSpeed;
+				// }
+			}
+		});
+	}	
 	alienPlayerCollissions() {
 		this.aliens.getAlive().forEach((alien) => {
 			if (alien.collidesWith(this.sprite)) {
