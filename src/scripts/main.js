@@ -75,6 +75,10 @@ events.on('PLAYER_LOSE_LIFE', () => {
 	audio.play('explosion');
 	createSparks(player, player.sprite, 'green');
 
+	player.sprite.x = canvas.width / 2;
+	player.sprite.dx = 0;
+	player.chooseTarget();
+
 	if (player.lives <= 0) {
 		alert('YOU WIN');
 		window.location = window.location;
