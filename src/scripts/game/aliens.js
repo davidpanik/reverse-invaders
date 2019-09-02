@@ -1,10 +1,7 @@
 import { Sprite, Pool } from '../vendor/kontra';
 import { leftPressed, rightPressed } from '../util/keys';
+import center from '../util/center';
 
-const center = {
-	x: 0.5,
-	y: 0.5
-};
 
 function sortByX(alpha, beta) {
 	return (alpha.x > beta.x) ? 1 : (beta.x > alpha.x) ? -1 : 0;

@@ -1,10 +1,7 @@
 import { Sprite, Pool } from '../vendor/kontra';
 import { chance, randomFromArray } from '../util/random';
+import center from '../util/center';
 
-const center = {
-	x: 0.5,
-	y: 0.5
-};
 
 class Player {
 	constructor(canvas, audio, events, aliens) {

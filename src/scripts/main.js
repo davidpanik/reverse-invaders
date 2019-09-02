@@ -2,7 +2,6 @@
 
 TODO
 	Reduce filesize
-	Move center into a file
 	Make player and aliens less tightly linked
 	Better player dodging
 	Stop player flickering about
@@ -25,6 +24,7 @@ import Player from './game/player';
 import Audio from './util/audio';
 import Events from './util/events';
 import { random } from './util/random';
+import center from './util/center';
 import './interface/ghosting';
 import './interface/mobileCheck';
 import './interface/scaling';
@@ -80,11 +80,6 @@ events.on('PLAYER_LOSE_LIFE', () => {
 		window.location = window.location;
 	}
 });
-
-const center = {
-	x: 0.5,
-	y: 0.5
-};
 
 function createSparks(owner, source, color) {
 	for (let x = 0; x < random(20, 40); x++) {
