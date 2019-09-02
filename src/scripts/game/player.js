@@ -15,11 +15,13 @@ class Player {
 		this.speed = 1;
 		this.firingRange = 70;
 		this.dodgeRange = 200;
+		this.rechargeTime = 3000;
 
 		// VARIABLE
 		this.weaponReady = true;
 		this.lives = 10;
 		this.target = null;
+		this.recharging = false;
 
 		// DISPLAY
 		this.sprite = new Sprite({
@@ -44,15 +46,19 @@ class Player {
 
 	// FUNCTIONS
 	update() {
-		this.workOutSpeed();
-		this.moveTowardsTarget();
-		this.fireMissiles();
-		this.playerMissileCollissions();
-		this.alienMissileCollissions();
-		this.playerMissileDodging();
-		this.alienPlayerCollissions();
-		this.changeTarget();
-		this.hitEdges();
+		if (!this.recharging) {
+			this.workOutSpeed();
+			this.moveTowardsTarget();
+			this.fireMissiles();
+			this.playerMissileCollissions();
+			this.alienMissileCollissions();
+			this.playerMissileDodging();
+			this.alienPlayerCollissions();
+			this.changeTarget();
+			this.hitEdges();
+		} else {
+			this.sprite.dx = 0;
+		}
 
 		this.sprite.update();
 		this.missiles.update();
@@ -62,9 +68,11 @@ class Player {
 		this.speed = this.aliens.speed * 0.8;
 	}
 	moveTowardsTarget() {
-		if (this.sprite.x < this.target.x - 10) {
+		const margin = 10;
+
+		if (this.sprite.x < this.target.x - margin) {
 			this.sprite.dx = this.speed;
-		} else if (this.sprite.x > this.target.x + 10) {
+		} else if (this.sprite.x > this.target.x + margin) {
 			this.sprite.dx = -1 * this.speed;
 		} else {
 			this.sprite.dx = 0;
@@ -162,7 +170,10 @@ class Player {
 	render() {
 		this.sparks.render();
 		this.missiles.render();
-		this.sprite.render();
+		let date = new Date();
+		if (!this.recharging || date.getMilliseconds() / 100 < 5) {
+			this.sprite.render();
+		}
 	}
 	updateDisplay() {
 		document.getElementById('playerLives').innerHTML = 'Lives: ' + this.lives;
