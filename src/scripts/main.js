@@ -1,7 +1,8 @@
 /*
 
 TODO
-	Better player dodging
+	Player is now too hard to hit
+	Game gets faster on reset
 	Stop player flickering about
 	Record time taken to win game
 	Reduce filesize

@@ -3,6 +3,13 @@ import { chance, randomFromArray } from '../util/random';
 import center from '../util/center';
 
 
+function getDistance(x1, y1, x2, y2) {
+	let xDiff = x1 - x2;
+	let yDiff = y1 - y2;
+
+	return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+}
+
 class Player {
 	constructor(canvas, audio, events, aliens) {
 		this.canvas = canvas;
@@ -14,7 +21,7 @@ class Player {
 		this.cooldown = 1000;
 		this.speed = 1;
 		this.firingRange = 70;
-		this.dodgeRange = 200;
+		this.dodgeRange = 50;
 		this.rechargeTime = 2000;
 		this.invincibilityTime = 4000;
 
@@ -129,22 +136,18 @@ class Player {
 	}
 	playerMissileDodging() {
 		this.aliens.missiles.getAliveObjects().forEach((missile) => {
-			if (missile.y > this.sprite.y - this.dodgeRange && missile.y < this.sprite.y - (this.sprite.height / 2) - (missile.height / 2)) {
-				let dodgeSpeed = 3;
-				if (this.sprite.y - missile.y < this.sprite.height * 2) {
-					dodgeSpeed = 4;
-					// this.chooseTarget();
+			if (missile.y > this.sprite.y - this.dodgeRange && missile.y < this.canvas.height) { // Missile is getting close
+				let distance = getDistance(missile.x, missile.y + missile.dy, this.sprite.x + this.sprite.dx, this.sprite.y);
+
+				if (distance < 30) {
+					if (this.sprite.x < missile.x) {
+						this.sprite.dx = -2;
+					} else {
+						this.sprite.dx = 2;
+					}
+				} else if (this.sprite.dx !== 0 && distance < 50) {
+					this.sprite.dx = 0;
 				}
-
-				// if (missile.x > this.sprite.x - (this.sprite.width * 1.5) && missile.x <= this.sprite.x + (this.sprite.width * 1.5)) {
-				// 	this.sprite.dx = Math.sign(this.sprite.dx) * this.speed * dodgeSpeed;
-				// }
-
-				// if (missile.x > this.sprite.x - (this.sprite.width * 1.5) && missile.y < this.sprite.y) {
-				// 	this.sprite.dx = this.speed * dodgeSpeed;
-				// } else if (missile.x <= this.sprite.x + (this.sprite.width * 1.5) && missile.y > this.sprite.y) {
-				// 	this.sprite.dx = -1 * this.speed * dodgeSpeed;
-				// }
 			}
 		});
 	}	
