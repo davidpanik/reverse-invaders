@@ -50,7 +50,6 @@ class Player {
 			this.workOutSpeed();
 			this.moveTowardsTarget();
 			this.fireMissiles();
-			this.playerMissileCollissions();
 			this.alienMissileCollissions();
 			this.playerMissileDodging();
 			this.alienPlayerCollissions();
@@ -59,6 +58,8 @@ class Player {
 		} else {
 			this.sprite.dx = 0;
 		}
+
+		this.playerMissileCollissions();
 
 		this.sprite.update();
 		this.missiles.update();

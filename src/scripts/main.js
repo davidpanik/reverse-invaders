@@ -31,33 +31,41 @@ import './interface/scaling';
 
 
 let { canvas } = init('mainCanvas');
-
 canvas.gutter = 10;
+
+let aliens;
+let player;
+let loop;
 
 let audio = new Audio();
 let events = new Events();
-let aliens = new Aliens(canvas, audio, events);
-let player = new Player(canvas, audio, events, aliens);
 
-let loop = new GameLoop({
-	update: function () {
-		player.update();
-		aliens.update();
-	},
-	render: function () {
-		player.render();
-		aliens.render();
-	}
-});
+function newGame() {
+	aliens = new Aliens(canvas, audio, events);
+	player = new Player(canvas, audio, events, aliens);
+
+	loop = new GameLoop({
+		update: function () {
+			player.update();
+			aliens.update();
+		},
+		render: function () {
+			player.render();
+			aliens.render();
+		}
+	});
+
+	loop.start();
+}
 
 events.on('ALIENS_REACHED_BOTTOM', () => {
 	alert('YOU WIN');
-	window.location = window.location;
+	newGame();
 });
 
 events.on('ALL_ALIENS_DEAD', () => {
 	alert('GAME OVER');
-	window.location = window.location;
+	newGame();
 });
 
 events.on('ALIEN_KILLED', (alien) => {
@@ -85,7 +93,7 @@ events.on('PLAYER_LOSE_LIFE', () => {
 
 	if (player.lives <= 0) {
 		alert('YOU WIN');
-		window.location = window.location;
+		newGame();
 	}
 });
 
@@ -107,4 +115,4 @@ function createSparks(owner, source, color) {
 	}
 }
 
-loop.start();
+newGame();

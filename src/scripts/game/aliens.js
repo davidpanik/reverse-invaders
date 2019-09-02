@@ -33,6 +33,7 @@ class Aliens {
 		this.speed = 1;
 		this.firingFrom = '';
 		this.weaponsReady = true;
+		this.switchingInterval = null;
 
 		// DISPLAY
 		this.sprites = [];
@@ -65,7 +66,7 @@ class Aliens {
 		}
 	}
 	handleSwitching() {
-		setInterval(() => {
+		this.switchingInterval = setInterval(() => {
 			if (this.firingFrom === 'odd') {
 				this.firingFrom = 'even';
 			} else {
