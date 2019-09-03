@@ -24,7 +24,7 @@ class Aliens {
 		this.rows = 4;
 		this.columns = 8;
 		this.width = 40;
-		this.height = 40;
+		this.height = 30;
 		this.spacing = 30;
 		this.descent = 0.05;
 		this.maxSpeed = 8;

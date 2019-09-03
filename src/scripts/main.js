@@ -2,9 +2,8 @@
 
 TODO
 	Player is now too hard to hit
+	Remember audio toggle setting
 	Game gets faster on reset
-	Stop player flickering about
-	Record time taken to win game
 	Reduce filesize
 	Add sprites
 	Test on mobile
@@ -37,6 +36,7 @@ canvas.gutter = 10;
 let aliens;
 let player;
 let loop;
+let startTime;
 
 let audio = new Audio();
 let events = new Events();
@@ -44,6 +44,12 @@ let events = new Events();
 function newGame() {
 	aliens = new Aliens(canvas, audio, events);
 	player = new Player(canvas, audio, events, aliens);
+
+	startTime = new Date();
+
+	if (loop && loop.stop) {
+		loop.stop();
+	}
 
 	loop = new GameLoop({
 		update: function () {
@@ -60,12 +66,11 @@ function newGame() {
 }
 
 events.on('ALIENS_REACHED_BOTTOM', () => {
-	alert('YOU WIN');
-	newGame();
+	events.emit('ALIENS_WIN');
 });
 
 events.on('ALL_ALIENS_DEAD', () => {
-	alert('GAME OVER');
+	alert('GAME OVER! FINAL SCORE: ' + getFinalScore());
 	newGame();
 });
 
@@ -85,12 +90,37 @@ events.on('PLAYER_LOSE_LIFE', () => {
 	createSparks(player, player.sprite, 'green');
 
 	if (player.lives <= 0) {
-		alert('YOU WIN');
-		newGame();
+		events.emit('ALIENS_WIN');
 	} else {
 		player.respawn();
 	}
 });
+
+events.on('ALIENS_WIN', () => {
+	alert('YOU WIN! FINAL SCORE: ' + getFinalScore());
+	newGame();
+});
+
+
+function getFinalScore() {
+	let endTime = new Date();
+
+	let seconds = (endTime - startTime) / 1000;
+
+	const longestTime = (5 * 1000);
+
+	let finalScore = longestTime - seconds;
+
+	finalScore += (aliens.getAlive().length * 1000);
+
+	finalScore = Math.round(finalScore);
+
+	if (finalScore < 0) {
+		finalScore = 0;
+	}
+
+	return finalScore;
+}
 
 function createSparks(owner, source, color) {
 	for (let x = 0; x < random(20, 40); x++) {
