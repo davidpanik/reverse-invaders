@@ -2,7 +2,6 @@
 
 TODO
 	Player is now too hard to hit
-	Remember audio toggle setting
 	Game gets faster on reset
 	Reduce filesize
 	Add sprites
