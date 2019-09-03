@@ -36,12 +36,60 @@ button {
 	filter: saturate(3);
 	position: relative;
 	display: inline-block;
+	border: 2px solid green;
 	box-shadow: inset 5px 5px 55px 10px rgba(255, 255, 255, 0.17), 0px 0px 100px 10px rgba(0, 255, 0, 0.06);
 	animation: 1s infinite alternate glow;
 	animation-timing-function: linear;
 	overflow: hidden;
-	width: 804px;
-	height: 604px;
+	width: 800px;
+	height: 600px;
+
+	section {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+	}
+
+	&.intro {
+		#intro {
+			display: block;
+		}
+	}
+	&.game {
+		#game {
+			display: block;
+		}
+	}
+	&.results {
+		#results {
+			display: block;
+		}
+	}
+}
+
+.intro {
+	h1 {
+		color: red;
+		text-transform: uppercase;
+		font-size: 100px;
+	}
+
+	p {
+		color: yellow;
+	}
+}
+
+.results {
+	h2 {
+		color: red;
+	}
+
+	p {
+		color: yellow;
+	}
 }
 
 canvas {
@@ -51,13 +99,12 @@ canvas {
 }
 
 #ghostCanvas {
-	border: 4px solid transparent;
 	opacity: 0.07;
-	filter: grayscale(90%) filter(2px);
+	filter: filter(2px);
 }
 
 #mainCanvas {
-	border: 2px solid green;
+	
 }
 
 #overlay {

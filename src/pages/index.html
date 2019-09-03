@@ -11,10 +11,25 @@
 	</head>
 	<body>
 		<div id="screen">
-			<canvas id="ghostCanvas" width="800" height="600"></canvas>
-			<canvas id="mainCanvas" width="800" height="600"></canvas>
-			<div id="playerLives"></div>
-			<button id="audioToggle">Audio:</button>
+			<section id="intro">
+				<h1>Reverse Invaders</h1>
+
+				<p>It's Space Invaders but not as you know it!</p>
+				<p>Use the arrow keys to control the alien horde against the invading ship!</p>
+			</section>
+
+			<section id="game">
+				<canvas id="ghostCanvas" width="800" height="600"></canvas>
+				<canvas id="mainCanvas" width="800" height="600"></canvas>
+				<div id="playerLives"></div>
+				<button id="audioToggle">Audio:</button>
+			</section>
+
+			<section id="results">
+				<h2 id="outcome"></h2>
+				<p id="score"></p>
+			</section>
+
 			<div id="overlay"></div>
 		</div>
 

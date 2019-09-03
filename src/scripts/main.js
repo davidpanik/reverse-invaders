@@ -6,8 +6,7 @@ TODO
 	Reduce filesize
 	Add sprites
 	Test on mobile
-	Handle game end
-	Intro screen
+	General styling
 	Make player and aliens less tightly linked
 	Add special alien
 	Bring a dead alien back when special alien crosses the screen
@@ -22,6 +21,7 @@ import Aliens from './game/aliens';
 import Player from './game/player';
 import Audio from './util/audio';
 import Events from './util/events';
+import Navigation from './util/navigation';
 import { random } from './util/random';
 import center from './util/center';
 import './interface/ghosting';
@@ -39,8 +39,11 @@ let startTime;
 
 let audio = new Audio();
 let events = new Events();
+let navigation = new Navigation();
 
 function newGame() {
+	navigation.go('game');
+
 	aliens = new Aliens(canvas, audio, events);
 	player = new Player(canvas, audio, events, aliens);
 
@@ -69,8 +72,10 @@ events.on('ALIENS_REACHED_BOTTOM', () => {
 });
 
 events.on('ALL_ALIENS_DEAD', () => {
-	alert('GAME OVER! FINAL SCORE: ' + getFinalScore());
-	newGame();
+	loop.stop();
+	navigation.go('results');
+	document.getElementById('outcome').innerHTML = 'Game over';
+	document.getElementById('score').innerHTML = getFinalScore();
 });
 
 events.on('ALIEN_KILLED', (alien) => {
@@ -96,22 +101,35 @@ events.on('PLAYER_LOSE_LIFE', () => {
 });
 
 events.on('ALIENS_WIN', () => {
-	alert('YOU WIN! FINAL SCORE: ' + getFinalScore());
-	newGame();
+	loop.stop();
+	navigation.go('results');
+	document.getElementById('results').innerHTML = 'You win';
+	document.getElementById('score').innerHTML = getFinalScore();
 });
 
 
+// Navigate between screens
+document.addEventListener('keydown', handleNavigation);
+document.addEventListener('click', handleNavigation);
+
+function handleNavigation() {
+	switch (navigation.current) {
+	case 'intro':
+		newGame();
+		break;
+	case 'results':
+		newGame();
+		break;
+	}
+}
+
 function getFinalScore() {
 	let endTime = new Date();
-
 	let seconds = (endTime - startTime) / 1000;
-
 	const longestTime = (5 * 1000);
 
 	let finalScore = longestTime - seconds;
-
 	finalScore += (aliens.getAlive().length * 1000);
-
 	finalScore = Math.round(finalScore);
 
 	if (finalScore < 0) {
@@ -139,4 +157,4 @@ function createSparks(owner, source, color) {
 	}
 }
 
-newGame();
+navigation.go('intro');
