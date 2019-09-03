@@ -74,11 +74,16 @@ button {
 	h1 {
 		color: red;
 		text-transform: uppercase;
+		text-shadow: 2px 8px 0px #400, 2px 12px 0px #400;
 		font-size: 100px;
+		font-weight: bold;
+		transform: perspective(300px) rotateX(-35deg);
+		margin-bottom: 50px;
 	}
 
 	p {
 		color: yellow;
+		font-size: 30px;
 	}
 }
 
