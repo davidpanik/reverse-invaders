@@ -187,7 +187,7 @@ class Player {
 		}
 	}
 	updateDisplay() {
-		document.getElementById('playerLives').innerHTML = 'Lives: ' + this.lives;
+		document.getElementById('playerLives').innerHTML = 'Lives:' + this.lives;
 	}
 
 	// HELPERS
