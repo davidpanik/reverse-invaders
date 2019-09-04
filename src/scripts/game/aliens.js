@@ -1,4 +1,4 @@
-import { Sprite, Pool } from '../vendor/kontra';
+import { Sprite, Pool, SpriteSheet } from '../vendor/kontra';
 import { leftPressed, rightPressed } from '../util/keys';
 import center from '../util/center';
 
@@ -10,6 +10,57 @@ function sortByX(alpha, beta) {
 function sortByY(alpha, beta) {
 	return (alpha.y > beta.y) ? 1 : (beta.y > alpha.y) ? -1 : 0;
 }
+
+let alien1;
+let image1 = new Image();
+image1.onload = function () {
+	alien1 = new SpriteSheet({
+		image: image1,
+		frameWidth: 10,
+		frameHeight: 7,
+		animations: {
+			walk: {
+				frames: '0..3', // frames 0 through 9
+				frameRate: 4
+			}
+		}
+	});
+};
+image1.src = '/images/alien1.png';
+
+let alien2;
+let image2 = new Image();
+image2.onload = function () {
+	alien2 = new SpriteSheet({
+		image: image2,
+		frameWidth: 10,
+		frameHeight: 7,
+		animations: {
+			walk: {
+				frames: '0..3', // frames 0 through 9
+				frameRate: 4
+			}
+		}
+	});
+};
+image2.src = '/images/alien2.png';
+
+let alien3;
+let image3 = new Image();
+image3.onload = function () {
+	alien3 = new SpriteSheet({
+		image: image3,
+		frameWidth: 10,
+		frameHeight: 7,
+		animations: {
+			walk: {
+				frames: '0..3', // frames 0 through 9
+				frameRate: 4
+			}
+		}
+	});
+};
+image3.src = '/images/alien3.png';
 
 class Aliens {
 	constructor(canvas, audio, events) {
@@ -49,16 +100,17 @@ class Aliens {
 	}
 	populateGrid() {
 		let offsetLeft = (this.canvas.width - (this.columns * this.width) - ((this.columns - 1) * this.spacing)) / 2;
-
+		let sprites = [alien1.animations, alien2.animations, alien3.animations, alien1.animations];
 		for (let row = 0; row < this.rows; row++) {
 			for (let column = 0; column < this.columns; column++) {
 				this.sprites.push(new Sprite({
 					x: ((this.width + this.spacing) * column) + offsetLeft + (this.width / 2),
 					y: ((this.width + this.spacing) * row) + 50,
-					color: 'blue',
+					// color: 'blue',
 					width: this.width,
 					height: this.height,
 					anchor: center,
+					animations: sprites[row],
 					alive: true,
 					aboutToFire: false
 				}));
@@ -158,7 +210,12 @@ class Aliens {
 	render() {
 		this.sparks.render();
 		this.missiles.render();
-		this.getAlive().forEach((alien) => alien.render());
+		let date = new Date();
+		this.getAlive().forEach((alien) => {
+			if (!alien.aboutToFire || date.getMilliseconds() % 5 === 1) {
+				alien.render();
+			}
+		});
 	}
 
 	// HELPERES
