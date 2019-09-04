@@ -2,7 +2,6 @@
 
 TODO
 	Player is now too hard to hit
-	Game gets faster on reset
 	Reduce filesize
 	Add sprites
 	Test on mobile
@@ -109,7 +108,11 @@ events.on('ALIENS_WIN', () => {
 
 
 // Navigate between screens
-document.addEventListener('keydown', handleNavigation);
+document.addEventListener('keydown', (event) => {
+	if (event.keyCode === 13 || event.keyCode === 32) {
+		handleNavigation();
+	}
+});
 document.addEventListener('click', handleNavigation);
 
 function handleNavigation() {
