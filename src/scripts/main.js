@@ -2,7 +2,6 @@
 
 TODO
 	Better sprite for player
-	Set favicon
 	Register Coil
 	Reduce filesize
 	Player is now too hard to hit
