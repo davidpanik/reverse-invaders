@@ -2,7 +2,6 @@
 
 TODO
 	Better sprite for player
-	Register Coil
 	Reduce filesize
 	Player is now too hard to hit
 	Test on mobile
