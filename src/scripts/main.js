@@ -1,7 +1,8 @@
 /*
 
 TODO
-	Better sprite for player
+	Nicer handling of sprites
+	Nicer way of showing "about to fire" state
 	Reduce filesize
 	Player is now too hard to hit
 	Test on mobile

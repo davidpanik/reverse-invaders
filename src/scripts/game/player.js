@@ -55,8 +55,8 @@ class Player {
 			x: (this.canvas.width / 2) - 10,
 			y: this.canvas.height - 40,
 			// color: 'red',
-			width: 30,
-			height: 20,
+			width: 40,
+			height: 27,
 			anchor: center,
 			animations: player1.animations,
 			dx: 2
