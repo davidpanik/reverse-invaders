@@ -1,13 +1,14 @@
 /*
 
 TODO
-	Player is now too hard to hit
+	Style results screen
+	Settle on colour scheme
+	Set favicon
 	Reduce filesize
-	Add sprites
+	Player is now too hard to hit
 	Test on mobile
-	General styling
-	Make player and aliens less tightly linked
 	Add special alien
+	Make player aim for special alien
 	Bring a dead alien back when special alien crosses the screen
 
 	https://reverse-invaders.netlify.com/

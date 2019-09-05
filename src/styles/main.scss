@@ -7,7 +7,6 @@ $color-blue: #0000F0;
 $color-green: #01F001;
 $color-cyan: #00F0F1;
 $color-purple: #F200F2;
-$border-width: 2em;
 $font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
 
 body {
@@ -38,14 +37,14 @@ button {
 	filter: saturate(3);
 	position: relative;
 	display: inline-block;
-	border: 2px solid green;
-	box-shadow: inset 5px 5px 55px 10px rgba(255, 255, 255, 0.17), 0px 0px 100px 10px rgba(0, 255, 0, 0.06);
+	box-shadow: inset 5px 5px 55px 10px rgba(255, 255, 255, 0.17), 0px 0px 100px 10px rgba(0, 255, 0, 0.15);
 	animation: 1s infinite alternate glow;
 	animation-timing-function: linear;
 	overflow: hidden;
 	width: 800px;
 	height: 600px;
 
+	#border,
 	section {
 		display: none;
 		position: absolute;
@@ -56,6 +55,11 @@ button {
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;		
+	}
+
+	#border {
+		display: block;
+		border: 2px solid green;
 	}
 
 	&.intro {
@@ -162,6 +166,7 @@ canvas {
 
 #screen,
 canvas,
+#border,
 #overlay {
 	border-radius: 20px;
 	pointer-events: none;
