@@ -20,7 +20,7 @@ image1.onload = function () {
 		frameHeight: 7,
 		animations: {
 			walk: {
-				frames: '0..3', // frames 0 through 9
+				frames: '0..3',
 				frameRate: 4
 			}
 		}
@@ -37,7 +37,7 @@ image2.onload = function () {
 		frameHeight: 7,
 		animations: {
 			walk: {
-				frames: '0..3', // frames 0 through 9
+				frames: '0..3',
 				frameRate: 4
 			}
 		}
@@ -54,7 +54,7 @@ image3.onload = function () {
 		frameHeight: 7,
 		animations: {
 			walk: {
-				frames: '0..3', // frames 0 through 9
+				frames: '0..3',
 				frameRate: 4
 			}
 		}
