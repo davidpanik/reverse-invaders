@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Settle on colour scheme
 	Better sprite for player
 	Set favicon
 	Register Coil
@@ -37,6 +36,7 @@ import Audio from './util/audio';
 import Events from './util/events';
 import Navigation from './util/navigation';
 import { random } from './util/random';
+import { colorOrange, colorGreen } from './game/colors';
 import center from './util/center';
 import './interface/ghosting';
 import './interface/mobileCheck';
@@ -97,7 +97,7 @@ events.on('ALIEN_KILLED', (alien) => {
 
 	audio.play('blow');
 
-	createSparks(aliens, alien, 'red');
+	createSparks(aliens, alien, colorOrange);
 });
 
 events.on('PLAYER_LOSE_LIFE', () => {
@@ -105,7 +105,7 @@ events.on('PLAYER_LOSE_LIFE', () => {
 	player.updateDisplay();
 
 	audio.play('explosion');
-	createSparks(player, player.sprite, 'green');
+	createSparks(player, player.sprite, colorGreen);
 
 	if (player.lives <= 0) {
 		events.emit('ALIENS_WIN');

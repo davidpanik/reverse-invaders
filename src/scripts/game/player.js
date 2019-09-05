@@ -1,5 +1,6 @@
 import { Sprite, Pool, SpriteSheet } from '../vendor/kontra';
 import { chance, randomFromArray } from '../util/random';
+import { colorYellow } from './colors';
 import center from '../util/center';
 
 
@@ -53,7 +54,7 @@ class Player {
 		this.sprite = new Sprite({
 			x: (this.canvas.width / 2) - 10,
 			y: this.canvas.height - 40,
-			color: 'red',
+			// color: 'red',
 			width: 30,
 			height: 20,
 			anchor: center,
@@ -117,7 +118,7 @@ class Player {
 				this.missiles.get({
 					x: this.sprite.x,
 					y: this.sprite.y - (this.sprite.height / 2),
-					color: 'green',
+					color: colorYellow,
 					width: 5,
 					height: 15,
 					anchor: center,

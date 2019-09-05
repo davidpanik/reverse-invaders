@@ -1,12 +1,14 @@
 @import './vendor/_meyer-reset.scss';
 
-$color-black: #000;
-$color-white: #FFF;
-$color-yellow: #F1F000;
-$color-blue: #0000F0;
-$color-green: #01F001;
-$color-cyan: #00F0F1;
-$color-purple: #F200F2;
+$color-black: #000000;
+$color-white: #FFFFFF;
+$color-yellow: #FFFF00;
+$color-green: #00FF00;
+$color-red: #FF0000;
+$color-cyan: #00AEFF;
+$color-orange: #FF9900;
+$color-purple: #FF00FF;
+
 $font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
 
 body {
@@ -45,7 +47,7 @@ button {
 	filter: saturate(3);
 	position: relative;
 	display: inline-block;
-	box-shadow: inset 5px 5px 55px 10px rgba(255, 255, 255, 0.17), 0px 0px 100px 10px rgba(0, 255, 0, 0.15);
+	box-shadow: inset 5px 5px 55px 10px rgba(255, 255, 255, 0.17), 0px 0px 100px 10px rgba($color-green, 0.15);
 	animation: 1s infinite alternate glow;
 	animation-timing-function: linear;
 	overflow: hidden;
@@ -67,7 +69,7 @@ button {
 
 	#border {
 		display: block;
-		border: 2px solid green;
+		border: 2px solid $color-green;
 	}
 
 	&.intro {
@@ -87,7 +89,7 @@ button {
 	}
 
 	p {
-		color: yellow;
+		color: $color-yellow;
 		width: 75%;
 	}
 }
@@ -96,9 +98,9 @@ button {
 	animation: 1s ease alternate zoom-in;
 
 	h1 {
-		color: red;
+		color: $color-red;
 		text-transform: uppercase;
-		text-shadow: 2px 8px 0px #400, 2px 12px 0px #400;
+		text-shadow: 2px 8px 0px rgba($color-orange, 0.5), 2px 12px 0px rgba($color-orange, 0.5);
 		font-size: 17px;
 		line-height: 1;
 		font-weight: bold;
@@ -110,15 +112,11 @@ button {
 #results {
 	h2 {
 		text-transform: uppercase;
-		text-shadow: 2px 8px 0px #400, 2px 12px 0px #400;
+		text-shadow: 2px 8px 0px rgba($color-orange, 0.5), 2px 12px 0px rgba($color-orange, 0.5);
 		font-size: 15px;
 		line-height: 1;
 		margin-bottom: 80px;
-		color: red;
-	}
-
-	p {
-		color: yellow;
+		color: $color-red;
 	}
 
 	#success,
@@ -162,14 +160,14 @@ canvas {
 	right: 0;
 	opacity: 0.5;
 	background-color: transparent;
-	background-image: linear-gradient(transparent 50%, rgba(0,0,0,1) 50%);
+	background-image: linear-gradient(transparent 50%, $color-black 50%);
 	background-size: 4px 4px;
 
 	&::after {
 		display: block;
 		content: ' ';
 		position: absolute;
-		background: #fff;
+		background: $color-white;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -183,7 +181,7 @@ canvas {
 		display: block;
 		content: ' ';
 		position: absolute;
-		background: #000;
+		background: $color-black;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -210,7 +208,7 @@ canvas,
 	background: transparent;
 	cursor: pointer;
 	pointer-events: initial;
-	color: red;
+	color: $color-red;
 
 	&::after {
 		content: " ";
@@ -218,17 +216,17 @@ canvas,
 		width: 15px;
 		height: 15px;
 		border-radius: 50%;
-		background: red;
+		background: $color-red;
 		position: absolute;
 		top: 35%;
 		right: 0;
 	}
 
 	&.active {
-		color: green;
+		color: $color-green;
 
 		&::after {
-			background: green;
+			background: $color-green;
 		}
 	}
 }
@@ -237,7 +235,7 @@ canvas,
 	position: absolute;
 	top: 0;
 	right: 0;
-	color: red;
+	color: $color-cyan;
 }
 
 #audioToggle,
@@ -275,8 +273,8 @@ canvas,
 		width: 0;
 		position: absolute;
 		pointer-events: none;
-		border-color: rgba(255, 0, 0, 0);
-		border-right-color: #ff0000;
+		border-color: transparent;
+		border-right-color: $color-red;
 		border-width: 50px;
 		margin-top: -50px;
 	}
@@ -294,8 +292,8 @@ canvas,
 		width: 0;
 		position: absolute;
 		pointer-events: none;
-		border-color: rgba(255, 0, 0, 0);
-		border-left-color: #ff0000;
+		border-color: transparent;
+		border-left-color: $color-red;
 		border-width: 50px;
 		margin-top: -50px;
 	}

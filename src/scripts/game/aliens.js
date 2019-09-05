@@ -1,5 +1,6 @@
 import { Sprite, Pool, SpriteSheet } from '../vendor/kontra';
 import { leftPressed, rightPressed } from '../util/keys';
+import { colorGreen } from './colors';
 import center from '../util/center';
 
 
@@ -151,13 +152,13 @@ class Aliens {
 		this.getColumns(this.getAlive().length > 1 ? this.firingFrom : 'all').forEach((alien) => {
 			if (this.weaponsReady && !alien.aboutToFire) {
 				alien.aboutToFire = true;
-				alien.color = 'yellow';
+				// alien.color = 'yellow';
 
 				setTimeout(() => {
 					this.missiles.get({
 						x: alien.x,
 						y: alien.y + (alien.height / 2),
-						color: 'yellow',
+						color: colorGreen,
 						width: 5,
 						height: 15,
 						anchor: center,
@@ -170,7 +171,7 @@ class Aliens {
 
 					setTimeout(() => {
 						alien.aboutToFire = false;
-						alien.color = 'blue';
+						// alien.color = 'blue';
 					}, 500);
 
 					setTimeout(() => {
