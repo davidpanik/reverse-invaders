@@ -1,9 +1,10 @@
 /*
 
 TODO
-	Style results screen
 	Settle on colour scheme
+	Better sprite for player
 	Set favicon
+	Register Coil
 	Reduce filesize
 	Player is now too hard to hit
 	Test on mobile
@@ -87,7 +88,7 @@ events.on('ALIENS_REACHED_BOTTOM', () => {
 events.on('ALL_ALIENS_DEAD', () => {
 	loop.stop();
 	navigation.go('results');
-	document.getElementById('outcome').innerHTML = 'Game over';
+	document.getElementById('results').setAttribute('class', 'failure');
 	document.getElementById('score').innerHTML = getFinalScore();
 });
 
@@ -116,7 +117,7 @@ events.on('PLAYER_LOSE_LIFE', () => {
 events.on('ALIENS_WIN', () => {
 	loop.stop();
 	navigation.go('results');
-	document.getElementById('results').innerHTML = 'You win';
+	document.getElementById('results').setAttribute('class', 'success');
 	document.getElementById('score').innerHTML = getFinalScore();
 });
 

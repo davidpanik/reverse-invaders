@@ -15,14 +15,13 @@ body {
 	height: 100vh;
 	text-align: center;
 	background: $color-black;
-	font-size: 1.7vmin;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	font-size: 21px;
 	font-weight: bold;
-	line-height: 1.5;	
+	line-height: 1.5;
 }
 
 * {
@@ -31,6 +30,15 @@ body {
 
 button {
 	font-family: $font-family;
+}
+
+.screen-reader-only {
+	position: absolute;
+	height: 1px;
+	width: 1px;
+	clip: rect(1px,1px,1px,1px);
+	clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+	overflow: hidden !important;
 }
 
 #screen {
@@ -54,7 +62,7 @@ button {
 		right: 0;
 		align-items: center;
 		justify-content: center;
-		flex-direction: column;		
+		flex-direction: column;
 	}
 
 	#border {
@@ -74,8 +82,13 @@ button {
 	}
 	&.results {
 		#results {
-			display: block;
+			display: flex;
 		}
+	}
+
+	p {
+		color: yellow;
+		width: 75%;
 	}
 }
 
@@ -92,20 +105,37 @@ button {
 		transform: perspective(300px) rotateX(-35deg);
 		margin-bottom: 80px;
 	}
-
-	p {
-		color: yellow;
-		width: 75%;
-	}
 }
 
-.results {
+#results {
 	h2 {
+		text-transform: uppercase;
+		text-shadow: 2px 8px 0px #400, 2px 12px 0px #400;
+		font-size: 15px;
+		line-height: 1;
+		margin-bottom: 80px;
 		color: red;
 	}
 
 	p {
 		color: yellow;
+	}
+
+	#success,
+	#failure {
+		display: none;
+	}
+
+	&.success {
+		#success {
+			display: block;
+		}
+	}
+
+	&.failure {
+		#failure {
+			display: block;
+		}
 	}
 }
 
@@ -214,7 +244,7 @@ canvas,
 #playerLives {
 	font-size: 20px;
 	font-weight: bold;
-	text-transform: uppercase;	
+	text-transform: uppercase;
 	padding: 0.8em;
 }
 
@@ -268,12 +298,12 @@ canvas,
 		border-left-color: #ff0000;
 		border-width: 50px;
 		margin-top: -50px;
-	}	
+	}
 }
 
 @keyframes zoom-in {
 	0% {
-		transform: scale(0)
+		transform: scale(0);
 	}
 
 	70% {

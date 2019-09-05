@@ -13,7 +13,8 @@
 		<div id="screen">
 			<div id="border">
 				<section id="intro">
-					<h1>
+					<h1 class="screen-reader-only">Reverse Invaders</h1>
+					<h1 aria-hidden="true">
 	██████&numsp;&numsp;███████&numsp;██&numsp;&numsp;&numsp;██&numsp;███████&numsp;██████&numsp;&numsp;███████&numsp;███████<br/>
 	██&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;<br/>
 	██████&numsp;&numsp;█████&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;██&numsp;█████&numsp;&numsp;&numsp;██████&numsp;&numsp;███████&numsp;█████&numsp;&numsp;<br/>
@@ -28,7 +29,7 @@
 					</h1>
 
 					<p>It's Space Invaders but not as you know it!</p>
-					<p>Use the arrow keys to control the alien horde against the invading ship!</p>
+					<p>Use the arrow keys to control the alien horde against the invading human ship!</p>
 				</section>
 
 				<section id="game">
@@ -39,8 +40,29 @@
 				</section>
 
 				<section id="results">
-					<h2 id="outcome"></h2>
-					<p id="score"></p>
+					<div id="success">
+						<h2 class="screen-reader-only">You win!</h2>
+						<h2 aria-hidden="true">
+██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;██████&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;███&numsp;&numsp;&numsp;&numsp;██&numsp;██<br/>
+&numsp;██&numsp;&numsp;██&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;████&numsp;&numsp;&numsp;██&numsp;██<br/>
+&numsp;&numsp;████&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;█&numsp;&numsp;██&numsp;██&numsp;██&numsp;██&numsp;&numsp;██&numsp;██<br/>
+&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;███&numsp;██&numsp;██&numsp;██&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;<br/>
+&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;██████&numsp;&numsp;&numsp;██████&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;███&numsp;███&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;████&numsp;██<br/>
+						</h2>
+					</div>
+
+					<div id="failure">
+						<h2 class="screen-reader-only">Game over</h2>
+						<h2 aria-hidden="true">
+&numsp;██████&numsp;&numsp;&numsp;█████&numsp;&numsp;███&numsp;&numsp;&numsp;&numsp;███&numsp;███████&numsp;&numsp;&numsp;&numsp;&numsp;██████&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;███████&numsp;██████&numsp;<br/>
+██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;██&numsp;████&numsp;&numsp;████&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;██<br/>
+██&numsp;&numsp;&numsp;███&numsp;███████&numsp;██&numsp;████&numsp;██&numsp;█████&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;█████&numsp;&numsp;&numsp;██████&numsp;<br/>
+██&numsp;&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;██&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;██&numsp;&numsp;██&numsp;&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;&numsp;&numsp;██<br/>
+&numsp;██████&numsp;&numsp;██&numsp;&numsp;&numsp;██&numsp;██&numsp;&numsp;&numsp;&numsp;&numsp;&numsp;██&numsp;███████&numsp;&numsp;&numsp;&numsp;&numsp;██████&numsp;&numsp;&numsp;&numsp;████&numsp;&numsp;&numsp;███████&numsp;██&numsp;&numsp;&numsp;██<br/>
+						</h2>
+					</div>
+					
+					<p>Final score: <span id="score"></score></p>
 				</section>				
 			</div>
 
