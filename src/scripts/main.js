@@ -4,7 +4,6 @@ TODO
 	Replace init
 	Replace GameLoop
 	Replace initKeys
-	Replace keyPressed
 	Replace Sprite
 	Replace Pool
 	Replace SpriteSheet
