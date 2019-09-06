@@ -2,8 +2,6 @@
 
 TODO
 	Replace init
-	Replace GameLoop
-	Replace initKeys
 	Replace Sprite
 	Replace Pool
 	Replace SpriteSheet
@@ -33,12 +31,13 @@ TODO
 ██-██---████---███---██---██-██████--███████-██---██-███████<br/>
 */
 
-import { init, GameLoop } from './vendor/kontra';
+import { init } from './vendor/kontra';
 import Aliens from './game/aliens';
 import Player from './game/player';
 import Audio from './util/audio';
 import Events from './util/events';
 import Navigation from './util/navigation';
+import GameLoop from './util/gameLoop';
 import { random } from './util/random';
 import { colorOrange, colorGreen } from './game/colors';
 import center from './util/center';
@@ -49,6 +48,8 @@ import './interface/scaling';
 
 let { canvas } = init('mainCanvas');
 canvas.gutter = 10;
+
+let context = canvas.getContext('2d');
 
 let aliens;
 let player;
@@ -77,6 +78,7 @@ function newGame() {
 			aliens.update();
 		},
 		render: function () {
+			context.clearRect(0, 0, canvas.width, canvas.height);
 			player.render();
 			aliens.render();
 		}
