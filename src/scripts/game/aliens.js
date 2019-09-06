@@ -1,6 +1,7 @@
-import { Sprite, Pool } from '../vendor/kontra';
+import { Sprite } from '../vendor/kontra';
 import { leftPressed, rightPressed } from '../util/keys';
 import loadSprite from '../util/loadSprite';
+import Pool from '../util/pool';
 import { colorGreen } from './colors';
 import center from '../util/center';
 

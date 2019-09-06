@@ -1,6 +1,7 @@
-import { Sprite, Pool } from '../vendor/kontra';
+import { Sprite } from '../vendor/kontra';
 import { chance, randomFromArray } from '../util/random';
 import loadSprite from '../util/loadSprite';
+import Pool from '../util/pool';
 import { colorYellow } from './colors';
 import center from '../util/center';
 

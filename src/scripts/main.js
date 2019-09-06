@@ -2,8 +2,8 @@
 
 TODO
 	Replace Sprite
-	Replace Pool
 	Replace SpriteSheet
+	Left and right are sometimes a bit sticky
 	Nicer way of showing "about to fire" state
 	Reduce filesize
 	Player is now too hard to hit
@@ -175,7 +175,7 @@ function createSparks(owner, source, color) {
 			anchor: center,
 			dx: random(-300, 300) / 100,
 			dy: random(-300, 300) / 100,
-			ttl: random(20, 60)
+			ttl: random(20, 80)
 		});
 	}
 }
