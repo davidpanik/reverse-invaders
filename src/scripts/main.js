@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Replace init
 	Replace Sprite
 	Replace Pool
 	Replace SpriteSheet
@@ -31,7 +30,6 @@ TODO
 ██-██---████---███---██---██-██████--███████-██---██-███████<br/>
 */
 
-import { init } from './vendor/kontra';
 import Aliens from './game/aliens';
 import Player from './game/player';
 import Audio from './util/audio';
@@ -39,17 +37,17 @@ import Events from './util/events';
 import Navigation from './util/navigation';
 import GameLoop from './util/gameLoop';
 import { random } from './util/random';
-import { colorOrange, colorGreen } from './game/colors';
+import { colorYellow, colorGreen } from './game/colors';
 import center from './util/center';
 import './interface/ghosting';
 import './interface/mobileCheck';
 import './interface/scaling';
 
 
-let { canvas } = init('mainCanvas');
-canvas.gutter = 10;
-
+let canvas = document.getElementById('mainCanvas');
 let context = canvas.getContext('2d');
+
+canvas.gutter = 10;
 
 let aliens;
 let player;
@@ -63,8 +61,8 @@ let navigation = new Navigation();
 function newGame() {
 	navigation.go('game');
 
-	aliens = new Aliens(canvas, audio, events);
-	player = new Player(canvas, audio, events, aliens);
+	aliens = new Aliens(canvas, context, audio, events);
+	player = new Player(canvas, context, audio, events, aliens);
 
 	startTime = new Date();
 
@@ -103,7 +101,7 @@ events.on('ALIEN_KILLED', (alien) => {
 
 	audio.play('blow');
 
-	createSparks(aliens, alien, colorOrange);
+	createSparks(aliens, alien, colorYellow);
 });
 
 events.on('PLAYER_LOSE_LIFE', () => {
@@ -168,6 +166,7 @@ function createSparks(owner, source, color) {
 		let size = 5;
 
 		owner.sparks.get({
+			context: context,
 			x: source.x + (source.width / 2),
 			y: source.y + (source.height / 2),
 			color: color,

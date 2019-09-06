@@ -29,8 +29,9 @@ loadSprite('/images/alien3.png', 10, 7, (sprite) => {
 });
 
 class Aliens {
-	constructor(canvas, audio, events) {
+	constructor(canvas, context, audio, events) {
 		this.canvas = canvas;
+		this.context = context;
 		this.audio = audio;
 		this.events = events;
 
@@ -70,6 +71,7 @@ class Aliens {
 		for (let row = 0; row < this.rows; row++) {
 			for (let column = 0; column < this.columns; column++) {
 				this.sprites.push(new Sprite({
+					context: this.context,
 					x: ((this.width + this.spacing) * column) + offsetLeft + (this.width / 2),
 					y: ((this.width + this.spacing) * row) + 50,
 					// color: 'blue',
@@ -121,6 +123,7 @@ class Aliens {
 
 				setTimeout(() => {
 					this.missiles.get({
+						context: this.context,
 						x: alien.x,
 						y: alien.y + (alien.height / 2),
 						color: colorGreen,

@@ -18,8 +18,9 @@ loadSprite('/images/player.png', 15, 10, (sprite) => {
 });
 
 class Player {
-	constructor(canvas, audio, events, aliens) {
+	constructor(canvas, context, audio, events, aliens) {
 		this.canvas = canvas;
+		this.context = context;
 		this.audio = audio;
 		this.events = events;
 		this.aliens = aliens;
@@ -41,6 +42,7 @@ class Player {
 
 		// DISPLAY
 		this.sprite = new Sprite({
+			context: this.context,
 			x: (this.canvas.width / 2) - 10,
 			y: this.canvas.height - 40,
 			// color: 'red',
@@ -105,6 +107,7 @@ class Player {
 		if ((this.sprite.x > this.target.x - this.firingRange && this.sprite.x < this.target.x * this.firingRange) || chance(100)) {
 			if (this.weaponReady === true) {
 				this.missiles.get({
+					context: this.context,
 					x: this.sprite.x,
 					y: this.sprite.y - (this.sprite.height / 2),
 					color: colorYellow,
