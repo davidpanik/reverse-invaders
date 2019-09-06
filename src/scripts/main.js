@@ -8,7 +8,6 @@ TODO
 	Replace Sprite
 	Replace Pool
 	Replace SpriteSheet
-	Nicer handling of sprites
 	Nicer way of showing "about to fire" state
 	Reduce filesize
 	Player is now too hard to hit

@@ -1,5 +1,6 @@
-import { Sprite, Pool, SpriteSheet } from '../vendor/kontra';
+import { Sprite, Pool } from '../vendor/kontra';
 import { leftPressed, rightPressed } from '../util/keys';
+import loadSprite from '../util/loadSprite';
 import { colorGreen } from './colors';
 import center from '../util/center';
 
@@ -12,56 +13,20 @@ function sortByY(alpha, beta) {
 	return (alpha.y > beta.y) ? 1 : (beta.y > alpha.y) ? -1 : 0;
 }
 
-let alien1;
-let image1 = new Image();
-image1.onload = function () {
-	alien1 = new SpriteSheet({
-		image: image1,
-		frameWidth: 10,
-		frameHeight: 7,
-		animations: {
-			walk: {
-				frames: '0..3',
-				frameRate: 4
-			}
-		}
-	});
-};
-image1.src = '/images/alien1.png';
+let alienSprite1;
+loadSprite('/images/alien1.png', 10, 7, (sprite) => {
+	alienSprite1 = sprite;
+});
 
-let alien2;
-let image2 = new Image();
-image2.onload = function () {
-	alien2 = new SpriteSheet({
-		image: image2,
-		frameWidth: 10,
-		frameHeight: 7,
-		animations: {
-			walk: {
-				frames: '0..3',
-				frameRate: 4
-			}
-		}
-	});
-};
-image2.src = '/images/alien2.png';
+let alienSprite2;
+loadSprite('/images/alien2.png', 10, 7, (sprite) => {
+	alienSprite2 = sprite;
+});
 
-let alien3;
-let image3 = new Image();
-image3.onload = function () {
-	alien3 = new SpriteSheet({
-		image: image3,
-		frameWidth: 10,
-		frameHeight: 7,
-		animations: {
-			walk: {
-				frames: '0..3',
-				frameRate: 4
-			}
-		}
-	});
-};
-image3.src = '/images/alien3.png';
+let alienSprite3;
+loadSprite('/images/alien3.png', 10, 7, (sprite) => {
+	alienSprite3 = sprite;
+});
 
 class Aliens {
 	constructor(canvas, audio, events) {
@@ -101,7 +66,7 @@ class Aliens {
 	}
 	populateGrid() {
 		let offsetLeft = (this.canvas.width - (this.columns * this.width) - ((this.columns - 1) * this.spacing)) / 2;
-		let sprites = [alien1.animations, alien2.animations, alien3.animations, alien1.animations];
+		let sprites = [alienSprite1.animations, alienSprite2.animations, alienSprite3.animations, alienSprite1.animations];
 		for (let row = 0; row < this.rows; row++) {
 			for (let column = 0; column < this.columns; column++) {
 				this.sprites.push(new Sprite({

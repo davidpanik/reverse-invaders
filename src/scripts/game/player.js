@@ -1,5 +1,6 @@
-import { Sprite, Pool, SpriteSheet } from '../vendor/kontra';
+import { Sprite, Pool } from '../vendor/kontra';
 import { chance, randomFromArray } from '../util/random';
+import loadSprite from '../util/loadSprite';
 import { colorYellow } from './colors';
 import center from '../util/center';
 
@@ -11,22 +12,10 @@ function getDistance(x1, y1, x2, y2) {
 	return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 }
 
-let player1;
-let image1 = new Image();
-image1.onload = function () {
-	player1 = new SpriteSheet({
-		image: image1,
-		frameWidth: 15,
-		frameHeight: 10,
-		animations: {
-			walk: {
-				frames: '0..3',
-				frameRate: 4
-			}
-		}
-	});
-};
-image1.src = '/images/player.png';
+let playerSprite;
+loadSprite('/images/player.png', 15, 10, (sprite) => {
+	playerSprite = sprite;
+});
 
 class Player {
 	constructor(canvas, audio, events, aliens) {
@@ -58,7 +47,7 @@ class Player {
 			width: 40,
 			height: 27,
 			anchor: center,
-			animations: player1.animations,
+			animations: playerSprite.animations,
 			dx: 2
 		});
 		this.missiles = new Pool({
