@@ -1,6 +1,6 @@
 import Sprite from '../util/sprite';
+import Spritesheet from '../util/spritesheet';
 import { chance, randomFromArray } from '../util/random';
-import loadSprite from '../util/loadSprite';
 import Pool from '../util/pool';
 import { colorYellow } from './colors';
 import center from '../util/center';
@@ -12,11 +12,6 @@ function getDistance(x1, y1, x2, y2) {
 
 	return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 }
-
-let playerSprite;
-loadSprite('/images/player.png', 15, 10, (sprite) => {
-	playerSprite = sprite;
-});
 
 class Player {
 	constructor(canvas, context, audio, events, aliens) {
@@ -50,7 +45,7 @@ class Player {
 			width: 40,
 			height: 27,
 			anchor: center,
-			animations: playerSprite.animations,
+			spritesheet: new Spritesheet('/images/player.png', 4),
 			dx: 2
 		});
 		this.missiles = new Pool({

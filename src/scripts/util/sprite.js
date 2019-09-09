@@ -56,8 +56,8 @@ class Sprite {
 				this.x + anchorWidth, this.y + anchorHeight, this.width, this.height
 			);
 		}
-		else if (this.currentAnimation) {
-			this.currentAnimation.render({
+		else if (this.spritesheet) {
+			this.spritesheet.render({
 				x: this.x + anchorWidth,
 				y: this.y + anchorHeight,
 				width: this.width,

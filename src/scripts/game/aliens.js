@@ -1,6 +1,6 @@
 import Sprite from '../util/sprite';
+import Spritesheet from '../util/spritesheet';
 import { leftPressed, rightPressed } from '../util/keys';
-import loadSprite from '../util/loadSprite';
 import Pool from '../util/pool';
 import { colorGreen } from './colors';
 import center from '../util/center';
@@ -13,21 +13,6 @@ function sortByX(alpha, beta) {
 function sortByY(alpha, beta) {
 	return (alpha.y > beta.y) ? 1 : (beta.y > alpha.y) ? -1 : 0;
 }
-
-let alienSprite1;
-loadSprite('/images/alien1.png', 10, 7, (sprite) => {
-	alienSprite1 = sprite;
-});
-
-let alienSprite2;
-loadSprite('/images/alien2.png', 10, 7, (sprite) => {
-	alienSprite2 = sprite;
-});
-
-let alienSprite3;
-loadSprite('/images/alien3.png', 10, 7, (sprite) => {
-	alienSprite3 = sprite;
-});
 
 class Aliens {
 	constructor(canvas, context, audio, events) {
@@ -68,7 +53,7 @@ class Aliens {
 	}
 	populateGrid() {
 		let offsetLeft = (this.canvas.width - (this.columns * this.width) - ((this.columns - 1) * this.spacing)) / 2;
-		let sprites = [alienSprite1.animations, alienSprite2.animations, alienSprite3.animations, alienSprite1.animations];
+		let spritesheets = [new Spritesheet('/images/alien1.png', 4), new Spritesheet('/images/alien2.png', 4), new Spritesheet('/images/alien1.png', 4), new Spritesheet('/images/alien3.png', 4)];
 		for (let row = 0; row < this.rows; row++) {
 			for (let column = 0; column < this.columns; column++) {
 				this.sprites.push(new Sprite({
@@ -79,7 +64,7 @@ class Aliens {
 					width: this.width,
 					height: this.height,
 					anchor: center,
-					animations: sprites[row],
+					spritesheet: spritesheets[row],
 					alive: true,
 					aboutToFire: false
 				}));

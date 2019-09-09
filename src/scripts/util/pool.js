@@ -8,7 +8,7 @@ class Pool {
 	get(something) {
 		let deadObjects = this.getDeadObjects();
 
-		if (false) {
+		if (deadObjects.length > 0) {
 			deadObjects[0].init(something);
 		} else {
 			this.objects.push(new Sprite(something));
