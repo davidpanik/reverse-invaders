@@ -1,4 +1,4 @@
-import { Sprite } from '../vendor/kontra';
+import Sprite from '../util/sprite';
 import { chance, randomFromArray } from '../util/random';
 import loadSprite from '../util/loadSprite';
 import Pool from '../util/pool';
@@ -46,7 +46,7 @@ class Player {
 			context: this.context,
 			x: (this.canvas.width / 2) - 10,
 			y: this.canvas.height - 40,
-			// color: 'red',
+			// color: 'purple',
 			width: 40,
 			height: 27,
 			anchor: center,

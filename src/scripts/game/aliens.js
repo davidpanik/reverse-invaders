@@ -1,4 +1,4 @@
-import { Sprite } from '../vendor/kontra';
+import Sprite from '../util/sprite';
 import { leftPressed, rightPressed } from '../util/keys';
 import loadSprite from '../util/loadSprite';
 import Pool from '../util/pool';

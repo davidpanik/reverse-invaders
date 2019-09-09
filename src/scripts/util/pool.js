@@ -1,4 +1,4 @@
-import { Sprite } from '../vendor/kontra';
+import Sprite from './sprite';
 
 class Pool {
 	constructor() {

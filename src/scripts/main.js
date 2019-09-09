@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Replace Sprite
 	Replace SpriteSheet
 	Left and right are sometimes a bit sticky
 	Nicer way of showing "about to fire" state
