@@ -22,7 +22,7 @@ class Player {
 		this.aliens = aliens;
 		
 		// STATIC
-		this.cooldown = 1000;
+		this.cooldown = 2000;
 		this.speed = 1;
 		this.firingRange = 70;
 		this.dodgeRange = 50;
