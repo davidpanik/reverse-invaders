@@ -1,9 +1,7 @@
 /*
 
 TODO
-	Left and right are sometimes a bit sticky
 	Nicer way of showing "about to fire" state
-	Reduce filesize
 	Player is now too hard to hit
 	Test on mobile
 	Add special alien

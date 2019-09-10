@@ -1,40 +1,46 @@
-let pressed = '';
+let pressed = {
+	left: false,
+	right: false
+};
 
 function leftPressed() {
-	return (pressed === 'left');
+	return pressed.left;
 }
 
 function rightPressed() {
-	return (pressed === 'right');
+	return pressed.right;
 }
 
 
 document.addEventListener('keydown', (event) => {
 	if (event.keyCode === 37) {
-		pressed = 'left';
+		pressed.left = true;
 	}
 	if (event.keyCode === 39) {
-		pressed = 'right';
+		pressed.right = true;
 	}
 });
 document.addEventListener('keyup', (event) => {
-	if (event.keyCode === 37 || event.keyCode === 39) {
-		pressed = '';
+	if (event.keyCode === 37) {
+		pressed.left = false;
+	}
+	if (event.keyCode === 39) {
+		pressed.right = false;
 	}
 });
 
 document.getElementById('leftButton').addEventListener('mousedown', () => {
-	pressed = 'left';
+	pressed.left = true;
 });
 document.getElementById('leftButton').addEventListener('mouseup', () => {
-	pressed = '';
+	pressed.left = false;
 });
 
 document.getElementById('rightButton').addEventListener('mousedown', () => {
-	pressed = 'right';
+	pressed.right = true;
 });
 document.getElementById('rightButton').addEventListener('mouseup', () => {
-	pressed = '';
+	pressed.right = false;
 });
 
 export { leftPressed, rightPressed };
