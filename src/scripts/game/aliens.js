@@ -4,6 +4,7 @@ import { leftPressed, rightPressed } from '../util/keys';
 import Pool from '../util/pool';
 import { colorGreen } from './colors';
 import center from '../util/center';
+import isMonetized from '../util/monetization';
 
 
 function sortByX(alpha, beta) {
@@ -32,6 +33,8 @@ class Aliens {
 		this.spacing = 30;
 		this.descent = 0.05;
 		this.maxSpeed = 8;
+		this.missileSpeed = isMonetized() ? 5 : 3;
+		this.missileHeight = isMonetized() ? 25 : 15;
 
 		// VARIABLE
 		this.speed = 1;
@@ -114,9 +117,9 @@ class Aliens {
 						y: alien.y + (alien.height / 2),
 						color: colorGreen,
 						width: 5,
-						height: 15,
+						height: this.missileHeight,
 						anchor: center,
-						dy: 3,
+						dy: this.missileSpeed,
 						ttl: this.canvas.height
 					});
 

@@ -36,7 +36,7 @@ import center from './util/center';
 import './interface/ghosting';
 import './interface/mobileCheck';
 import './interface/scaling';
-
+import isMonetized from './util/monetization';
 
 let canvas = document.getElementById('mainCanvas');
 let context = canvas.getContext('2d');
@@ -51,6 +51,8 @@ let startTime;
 let audio = new Audio();
 let events = new Events();
 let navigation = new Navigation();
+
+const sparksLife = isMonetized() ? 160 : 80;
 
 function newGame() {
 	navigation.go('game');
@@ -172,7 +174,7 @@ function createSparks(owner, source, color) {
 			anchor: center,
 			dx: random(-300, 300) / 100,
 			dy: random(-300, 300) / 100,
-			ttl: random(20, 80)
+			ttl: random(20, sparksLife)
 		});
 	}
 }
