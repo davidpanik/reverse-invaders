@@ -152,6 +152,9 @@ function getFinalScore() {
 	if (finalScore < 0) {
 		finalScore = 0;
 	}
+	
+	// Format scores with commas
+	finalScore = finalScore.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 	return finalScore;
 }
