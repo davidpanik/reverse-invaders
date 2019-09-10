@@ -101,7 +101,7 @@ button {
 		color: $color-red;
 		text-transform: uppercase;
 		text-shadow: 2px 8px 0px rgba($color-orange, 0.5), 2px 12px 0px rgba($color-orange, 0.5);
-		font-size: 17px;
+		font-size: 16px;
 		line-height: 1;
 		font-weight: bold;
 		transform: perspective(300px) rotateX(-35deg);
@@ -113,7 +113,7 @@ button {
 	h2 {
 		text-transform: uppercase;
 		text-shadow: 2px 8px 0px rgba($color-orange, 0.5), 2px 12px 0px rgba($color-orange, 0.5);
-		font-size: 15px;
+		font-size: 14px;
 		line-height: 1;
 		margin-bottom: 80px;
 		color: $color-red;
@@ -146,10 +146,6 @@ canvas {
 #ghostCanvas {
 	opacity: 0.07;
 	filter: filter(2px);
-}
-
-#mainCanvas {
-	
 }
 
 #overlay {
@@ -249,8 +245,8 @@ canvas,
 
 #leftButton,
 #rightButton {
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	position: absolute;
 	bottom: 0;
 	background: transparent;
@@ -266,7 +262,7 @@ canvas,
 	left: 0;
 
 	&::after {
-		right: 40%;
+		right: 45%;
 		top: 50%;
 		border: solid transparent;
 		content: " ";
@@ -276,8 +272,8 @@ canvas,
 		pointer-events: none;
 		border-color: transparent;
 		border-right-color: $color-red;
-		border-width: 50px;
-		margin-top: -50px;
+		border-width: 40px;
+		margin-top: -40px;
 	}
 }
 
@@ -285,7 +281,7 @@ canvas,
 	right: 0;
 
 	&::after {
-		left: 40%;
+		left: 45%;
 		top: 50%;
 		border: solid transparent;
 		content: " ";
@@ -295,8 +291,8 @@ canvas,
 		pointer-events: none;
 		border-color: transparent;
 		border-left-color: $color-red;
-		border-width: 50px;
-		margin-top: -50px;
+		border-width: 40px;
+		margin-top: -40px;
 	}
 }
 
