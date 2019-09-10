@@ -23,10 +23,6 @@ class GameLoop {
 		let dt = now - this.last;
 		this.last = now;
 
-		if (dt > 1E3) {
-			return;
-		}
-
 		this.accumulator += dt;
 
 		while (this.accumulator >= this.delta) {
