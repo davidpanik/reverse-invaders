@@ -2,7 +2,6 @@
 
 TODO
 	Player is now too hard to hit
-	Test on mobile
 	Add special alien
 	Make player aim for special alien
 	Bring a dead alien back when special alien crosses the screen
