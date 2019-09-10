@@ -1,7 +1,6 @@
 /*
 
 TODO
-	Nicer way of showing "about to fire" state
 	Player is now too hard to hit
 	Test on mobile
 	Add special alien

@@ -1,3 +1,5 @@
+import { random } from './random';
+
 class Sprite {
 	constructor(properties) {
 		this.init(properties);
@@ -48,6 +50,13 @@ class Sprite {
 	render() {
 		let anchorWidth = -this.width * this.anchor.x;
 		let anchorHeight = -this.height * this.anchor.y;
+
+		const wiggleAmount = 3;
+
+		if (this.aboutToFire) {
+			anchorWidth += random(-wiggleAmount, wiggleAmount);
+			anchorHeight += random(-wiggleAmount, wiggleAmount);
+		}
 
 		if (this.image) {
 			this.context.drawImage(
