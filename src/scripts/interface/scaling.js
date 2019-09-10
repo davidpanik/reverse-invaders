@@ -1,11 +1,11 @@
 function scale() {
 	let screen = document.getElementById('screen');
-	let margin = 100;
+	let screenPercentage = 0.9;
 
 	let canvasWidth = screen.offsetWidth;
 	let canvasHeight = screen.offsetHeight;
-	let screenWidth = window.innerWidth - margin;
-	let screenHeight = window.innerHeight - margin;
+	let screenWidth = window.innerWidth * screenPercentage;
+	let screenHeight = window.innerHeight * screenPercentage;
 
 	let widthScale = screenWidth / canvasWidth;
 	let heightScale = screenHeight / canvasHeight;
