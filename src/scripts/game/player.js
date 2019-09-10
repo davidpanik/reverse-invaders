@@ -22,7 +22,7 @@ class Player {
 		this.aliens = aliens;
 		
 		// STATIC
-		this.cooldown = 2000;
+		this.cooldown = 1800;
 		this.speed = 1;
 		this.firingRange = 70;
 		this.dodgeRange = 50;
@@ -148,13 +148,17 @@ class Player {
 			if (missile.y > this.sprite.y - this.dodgeRange && missile.y < this.canvas.height) { // Missile is getting close
 				let distance = getDistance(missile.x, missile.y + missile.dy, this.sprite.x + this.sprite.dx, this.sprite.y);
 
-				if (distance < 30) {
+				if (missile.x > this.sprite.x - 20 && missile.x < this.sprite.x) { // If missile is oncoming dodge right
+					this.sprite.dx = 2;
+				} else if (missile.x < this.sprite.x + 20 && missile.x >= this.sprite.x) { // If missile is oncoming dodge left
+					this.sprite.dx = -2;
+				} else if (distance < 30) { // If moving towards impact with a missile, change direction
 					if (this.sprite.x < missile.x) {
 						this.sprite.dx = -2;
 					} else {
 						this.sprite.dx = 2;
 					}
-				} else if (this.sprite.dx !== 0 && distance < 50) {
+				} else if (this.sprite.dx !== 0 && distance < 50) { // If continuing would crash into a missile, stop
 					this.sprite.dx = 0;
 				}
 			}
