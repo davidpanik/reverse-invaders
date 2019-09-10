@@ -66,7 +66,7 @@ class Player {
 			this.moveTowardsTarget();
 			this.fireMissiles();
 			// if (!chance(4)) {
-				this.playerMissileDodging();
+			this.playerMissileDodging();
 			// }
 			this.changeTarget();
 			this.hitEdges();
