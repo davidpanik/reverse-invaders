@@ -165,11 +165,8 @@ class Aliens {
 	render() {
 		this.sparks.render();
 		this.missiles.render();
-		let date = new Date();
 		this.getAlive().forEach((alien) => {
-			// if (!alien.aboutToFire || date.getMilliseconds() % 5 === 1) {
-				alien.render();
-			// }
+			alien.render();
 		});
 	}
 
