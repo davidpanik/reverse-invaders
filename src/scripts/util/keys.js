@@ -29,18 +29,19 @@ document.addEventListener('keyup', (event) => {
 	}
 });
 
-document.getElementById('leftButton').addEventListener('mousedown', () => {
-	pressed.left = true;
-});
-document.getElementById('leftButton').addEventListener('mouseup', () => {
-	pressed.left = false;
-});
+function addEvents(element, events, callback) {
+	events.forEach((event) => {
+		element.addEventListener(event, callback);
+	});
+}
 
-document.getElementById('rightButton').addEventListener('mousedown', () => {
-	pressed.right = true;
-});
-document.getElementById('rightButton').addEventListener('mouseup', () => {
-	pressed.right = false;
-});
+let mobileLeft = document.getElementById('leftButton');
+let mobileRight = document.getElementById('rightButton');
+
+addEvents(mobileLeft, ['mousedown', 'touchstart'], () => { pressed.left = true; });
+addEvents(mobileLeft, ['mouseup', 'touchend', 'touchcancel'], () => { pressed.left = false; });
+
+addEvents(mobileRight, ['mousedown', 'touchstart'], () => { pressed.right = true; });
+addEvents(mobileRight, ['mouseup', 'touchend', 'touchcancel'], () => { pressed.right = false; });
 
 export { leftPressed, rightPressed };
