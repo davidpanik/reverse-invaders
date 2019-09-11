@@ -45,7 +45,7 @@ class Player {
 			width: 40,
 			height: 27,
 			anchor: center,
-			spritesheet: new Spritesheet('/images/player.png', 4),
+			spritesheet: new Spritesheet('./images/player.png', 4),
 			dx: 2
 		});
 		this.missiles = new Pool({

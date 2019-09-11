@@ -56,7 +56,7 @@ class Aliens {
 	}
 	populateGrid() {
 		let offsetLeft = (this.canvas.width - (this.columns * this.width) - ((this.columns - 1) * this.spacing)) / 2;
-		let spritesheets = [new Spritesheet('/images/alien1.png', 4), new Spritesheet('/images/alien2.png', 4), new Spritesheet('/images/alien1.png', 4), new Spritesheet('/images/alien3.png', 4)];
+		let spritesheets = [new Spritesheet('./images/alien1.png', 4), new Spritesheet('./images/alien2.png', 4), new Spritesheet('./images/alien1.png', 4), new Spritesheet('./images/alien3.png', 4)];
 		for (let row = 0; row < this.rows; row++) {
 			for (let column = 0; column < this.columns; column++) {
 				this.sprites.push(new Sprite({
