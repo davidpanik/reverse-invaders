@@ -1,16 +1,4 @@
 /*
-
-TODO
-	Player is now too hard to hit
-	Add special alien
-	Make player aim for special alien
-	Bring a dead alien back when special alien crosses the screen
-
-	https://reverse-invaders.netlify.com/
-
-*/
-
-/*
 ██████--███████-██---██-███████-██████--███████-███████<br/>
 ██---██-██------██---██-██------██---██-██------██-----<br/>
 ██████--█████---██---██-█████---██████--███████-█████--<br/>
@@ -37,7 +25,9 @@ import './interface/ghosting';
 import './interface/mobileCheck';
 import './interface/scaling';
 import isMonetized from './util/monetization';
+import Storage from './util/storage';
 
+let storage = new Storage();
 let canvas = document.getElementById('mainCanvas');
 let context = canvas.getContext('2d');
 
@@ -86,10 +76,7 @@ events.on('ALIENS_REACHED_BOTTOM', () => {
 });
 
 events.on('ALL_ALIENS_DEAD', () => {
-	loop.stop();
-	navigation.go('results');
-	document.getElementById('results').setAttribute('class', 'failure');
-	document.getElementById('score').innerHTML = getFinalScore();
+	events.emit('GAME_END', 'failure');
 });
 
 events.on('ALIEN_KILLED', (alien) => {
@@ -115,10 +102,18 @@ events.on('PLAYER_LOSE_LIFE', () => {
 });
 
 events.on('ALIENS_WIN', () => {
+	events.emit('GAME_END', 'success');
+});
+
+events.on('GAME_END', (result) => {
 	loop.stop();
 	navigation.go('results');
-	document.getElementById('results').setAttribute('class', 'success');
-	document.getElementById('score').innerHTML = getFinalScore();
+	document.getElementById('results').setAttribute('class', result);
+	
+	let finalScore = getFinalScore();
+	let highScore = getHighScore(finalScore);
+	document.getElementById('score').innerHTML = formatScore(finalScore);
+	document.getElementById('highscore').innerHTML = formatScore(highScore);
 });
 
 
@@ -147,17 +142,33 @@ function getFinalScore() {
 	const longestTime = (5 * 1000);
 
 	let finalScore = longestTime - seconds;
-	finalScore += (aliens.getAlive().length * 1000);
+	finalScore += (aliens.getAlive().length * 2000);
 	finalScore = Math.round(finalScore);
 
 	if (finalScore < 0) {
 		finalScore = 0;
 	}
-	
-	// Format scores with commas
-	finalScore = finalScore.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 	return finalScore;
+}
+
+function getHighScore(currentScore) {
+	let highScore = parseInt(storage.get('highscore'));
+	if (!highScore) {
+		highScore = 0;
+	}
+
+	if (currentScore >= highScore) {
+		highScore = currentScore;
+		storage.set('highscore', highScore);
+	}
+
+	return highScore;
+}
+
+// Format scores with commas
+function formatScore(score) {
+	return score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 function createSparks(owner, source, color) {
